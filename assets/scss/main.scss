@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap');
+@import './checkout.scss';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+.relative {
+  position: relative;
+}
+
+.container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+/*
+** Input field
+*/
+.form-field {
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 20px 0;
+  & label {
+    padding: 0 0 10px 0;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #767676;
+  }
+
+  & input {
+    padding: 12px 10px;
+  }
+}
