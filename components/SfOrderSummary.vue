@@ -91,7 +91,7 @@ export default {
     },
     basketProducts: {
       type: Array,
-      required: true,
+      default: null,
     },
     subTotal: {
       type: Number,

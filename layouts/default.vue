@@ -1,19 +1,19 @@
 <template>
   <div>
-    <TheHeader />
+    <AppHeader />
     <Nuxt />
     <TheCart />
   </div>
 </template>
 
 <script>
-import TheHeader from '@/components/TheHeader';
+import AppHeader from '@/components/AppHeader';
 import TheCart from '@/components/cart/TheCart';
 
 export default {
   name: 'DefaultLayout',
   components: {
-    TheHeader,
+    AppHeader,
     TheCart,
   },
 }

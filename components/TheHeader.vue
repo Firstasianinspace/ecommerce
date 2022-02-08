@@ -2,7 +2,7 @@
   <SfHeader
     data-cy="app-header"
     :search-value="term"
-    :cart-items-qty="cartTotalItems"
+    :cart-items-qty="basketCount"
     :account-icon="accountIcon"
     class="sf-header--has-mobile-search"
     :search-placeholder="'Искать товары'"
@@ -27,19 +27,19 @@
         class="nav-item"
         data-cy="app-header-url_women"
         label="Женское"
-        link="/"
+        link="#"
       />
       <SfHeaderNavigationItem
         class="nav-item"
         data-cy="app-header-url_men"
         label="Мужское"
-        link="/"
+        link="#"
       />
       <SfHeaderNavigationItem
         class="nav-item"
         data-cy="app-header-url_men"
         label="Детям"
-        link="/"
+        link="#"
       />
     </template>
   </SfHeader>
@@ -54,7 +54,7 @@ export default {
     SfHeader,
   },
   methods: {
-    ...mapMutations('basket', ['toggleCartSidebar']),
+    ...mapMutations('basket', ['toggleCartSidebar', 'basketCount']),
     toggleCartSidebar2() {
       this.toggleCartSidebar()
     }
@@ -63,11 +63,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.sf-header__logo {
-  font-size: 22px;
-  font-weight: 700;
-  font-family: 'Raleway', sans-serif;
-  text-decoration: none;
-  color: #000;
-}
 </style>

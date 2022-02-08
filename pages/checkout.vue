@@ -27,7 +27,8 @@ import SfSteps from '@/components/SfSteps.vue'
 import SfOrderSummary from '@/components/SfOrderSummary'
 import SfStep from '@/components/SfStep.vue'
 
-const details = () => import('@/components/details.vue')
+const details = () => import('@/components/details.vue');
+const Shipping = () => import('@/components/Shipping.vue');
 
 export default {
   name: 'CheckoutPage',
@@ -50,6 +51,9 @@ export default {
     dynamicComponent() {
       if (this.active === 0) {
         return details
+      }
+      if (this.active === 1) {
+        return Shipping
       }
       return null
     },

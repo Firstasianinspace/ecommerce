@@ -212,6 +212,7 @@ export default {
   },
   data: () => ({
     isAddingToCart: false,
+    link: '#',
   }),
   computed: {
     productName: (vm) => vm.product?.item,
@@ -244,6 +245,9 @@ export default {
     addToBasket(product) {
       this.$emit('addToBasket', product)
     },
+    toggleIsOnWishlist() {
+      console.log('toggle wish')
+    }
   },
 }
 </script>

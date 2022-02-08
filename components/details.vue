@@ -1,6 +1,5 @@
 <template>
   <div id="detailed-cart">
-    AHAHHAAH
     <CollectedProducts
       v-for="product in basket"
       :key="product.id"
