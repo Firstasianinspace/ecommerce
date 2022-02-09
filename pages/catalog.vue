@@ -22,6 +22,7 @@ export default {
     CatalogGrid,
     // CatalogFilters,
   },
+    middleware: 'guest',
   async fetch() {
     await this.getProducts();
   },

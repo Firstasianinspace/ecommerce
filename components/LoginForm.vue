@@ -18,13 +18,16 @@
       @click="signInUser()"
     />
     <a href="#" class="login-form__restore"> Забыли пароль? </a>
+    {{ errorAttempts }}
   </form>
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 import { required, email, minLength, maxLength } from 'vuelidate/lib/validators'
 import CustomInputEmail from '@/components/common/CustomInputEmail'
 import CustomInputPassword from '@/components/common/CustomInputPassword'
+import { ERROR_TOO_MANY_ATTEMPTS, ERROR_TOO_MANY_ATTEMPTS_RU, ERROR_INVALID_PASSWORD, ERROR_INVALID_PASSWORD_RU } from '@/helpers/constants';
 
 export default {
   name: 'LoginForm',
@@ -44,16 +47,26 @@ export default {
       password: { required, minLength: minLength(6), maxLength: maxLength(25) },
     },
   },
+  computed: {
+    ...mapGetters('user', ['error']),
+
+    errorAttempts: (vm) => vm.error === ERROR_TOO_MANY_ATTEMPTS ? ERROR_TOO_MANY_ATTEMPTS_RU : null,
+    errorWrongPassword: (vm) => vm.error === ERROR_INVALID_PASSWORD ? ERROR_INVALID_PASSWORD_RU : null,
+
+  },
   methods: {
+    ...mapActions('user', ['signInAction']),
+
     async signInUser() {
       try {
-        await this.$fire.auth.signInWithEmailAndPassword(
-          this.formData.email,
-          this.formData.password
-        )
-        this.$router.push('/catalog')
+        await this.signInAction({ email: this.formData.email, password: this.formData.password })
+        if (this.user) {
+          this.$router.push('/catalog');
+        } else {
+          return null;
+        }
       } catch (e) {
-        alert(e)
+        alert(e);
       }
     },
   },

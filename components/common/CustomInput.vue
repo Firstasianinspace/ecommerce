@@ -3,14 +3,14 @@
   class="form-field"
   :class="{ 'hasError': v.$error }"
   >
-    <label v-if="label" class="form-label">{{ label }}</label>
+    <label v-if="label" :for="uniq" class="form-label">{{ label }}</label>
     <input
       :id="uniq"
       v-model="text"
       :name="uniq"
       value=""
-      type="text"
-      autocomplete="off"
+      :type="typeProp"
+      autocomplete="form-field-itcourse"
       :placeholder="placeholder"
     />
     <div v-if="v.$error" class="form-field__errors">
@@ -31,6 +31,10 @@ export default {
     value: {
       type: String,
       default: ''
+    },
+    typeProp: {
+      type: String,
+      default: 'text',
     },
     v: {
       type: Object,

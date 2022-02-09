@@ -9,6 +9,7 @@ const state = () => ({
 const getters = {
   isCartSidebarOpen: ({ isCartSidebarOpen }) => isCartSidebarOpen,
   basket: ({ basket }) => basket,
+  isBasketEmpty: ({ basket }) => basket.length === 0,
   basketCount: ({ basket }) => basket.length,
   basketTotal: ({ basket }) => {
     if (basket.length === 0) {

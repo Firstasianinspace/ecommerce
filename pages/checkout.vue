@@ -7,6 +7,11 @@
             <component :is="dynamicComponent" />
           </SfStep>
         </SfSteps>
+        <custom-button
+          :label="'Следующий шаг'"
+          :class="dynamicClass"
+          @click="nextStep()"
+        />
       </div>
       <div class="checkout-page-content__right">
         <SfOrderSummary
@@ -29,6 +34,8 @@ import SfStep from '@/components/SfStep.vue'
 
 const details = () => import('@/components/details.vue');
 const Shipping = () => import('@/components/Shipping.vue');
+const OrderPayment = () => import('@/components/OrderPayment.vue');
+const OrderReview = () => import('@/components/OrderReview.vue');
 
 export default {
   name: 'CheckoutPage',
@@ -37,6 +44,7 @@ export default {
     SfStep,
     SfOrderSummary,
   },
+  middleware: 'emptyCart',
   data: () => ({
     active: 0,
     steps: ['Детали', 'Доставка', 'Оплата', 'Review'],
@@ -48,6 +56,7 @@ export default {
       'basketTotal',
       'basketCount',
     ]),
+    dynamicClass: (vm) => vm.active === 3 ? 'btn-checkout-buy' : 'btn-checkout-next',
     dynamicComponent() {
       if (this.active === 0) {
         return details
@@ -55,11 +64,25 @@ export default {
       if (this.active === 1) {
         return Shipping
       }
+      if (this.active === 2) {
+        return OrderPayment
+      }
+      if (this.active === 3) {
+        return OrderReview
+      }
       return null
     },
   },
   methods: {
     ...mapActions('basket', ['removeFromBasket']),
+
+    nextStep() {
+      if (this.active === 3) {
+        return null
+      } else {
+        this.active +=1
+      }
+    }
   },
 }
 </script>
@@ -71,13 +94,14 @@ export default {
     display: grid;
     grid-template-columns: 2fr 1fr;
     grid-gap: 30px;
-      position: relative;
+    position: relative;
   }
 
   &-content {
     &__left {
       padding: 25px;
       border: 1px solid lightgrey;
+      position: relative;
     }
     &__right {
       padding: 25px;
@@ -88,4 +112,6 @@ export default {
     }
   }
 }
+
+
 </style>

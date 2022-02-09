@@ -8,14 +8,11 @@ const state = () => ({
   shippingData: {
     firstName: null,
     lastName: null,
-    streetName: null,
-    city: null,
-    province: null,
-    zipCode: null,
-    country: null,
+    address: null,
     phone: null,
     shippingMethod: null,
-  }
+  },
+  suggestions: null,
 });
 
 const getters = {
@@ -23,17 +20,6 @@ const getters = {
 };
 
 const actions = {
-  fetchUser({ commit }, user) {
-    commit('setField', user !== null);
-    if (user) {
-      commit('setField', {
-        displayName: user.displayName,
-        email: user.email
-      });
-    } else {
-      commit('setField', null);
-    }
-  },
   setShippingInfo({ commit }, shippingData) {
     commit('setField', shippingData)
   }
