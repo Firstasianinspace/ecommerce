@@ -34,7 +34,7 @@ export default {
     RegistrationForm,
   },
   layout: 'login',
-    middleware: 'authenticated',
+    // middleware: 'authenticated',
   data: () => ({
     selectedIndex: 0,
     isLogin: true,
