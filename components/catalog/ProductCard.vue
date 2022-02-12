@@ -252,11 +252,15 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import '~@storefront-ui/shared/styles/components/organisms/SfProductCard.scss';
 
 .custom-button__add {
   margin: 0 0 15px 0;
+}
+
+.sf-image .sf-image-loaded {
+  max-width: 100%;
 }
 
 .sf-price__symbol {
