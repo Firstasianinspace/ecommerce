@@ -8,6 +8,10 @@
   font-family: 'Roboto', sans-serif;
 }
 
+li {
+  list-style: none;
+}
+
 .relative {
   position: relative;
 }
@@ -24,6 +28,7 @@
   display: flex;
   flex-direction: column;
   padding: 0 0 20px 0;
+
   & label {
     padding: 0 0 10px 0;
     text-transform: uppercase;
@@ -33,5 +38,50 @@
 
   & input {
     padding: 12px 10px;
+    border: 1px solid #222;
+
+    &:focus {
+      border: 1px solid #5ECE7B;
+      outline: none;
+    }
+  }
+
+  &__errors {
+    padding: 0 0 0 25px;
+    margin: 15px 0 0 0;
+
+    &-item {
+      position: relative;
+      font-size: 14px;
+
+      &::before {
+        content: '';
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: #222;
+        position: absolute;
+        top: 50%;
+        left: -3%;
+        transform: translate(-50%, -50%)
+      }
+    }
+  }
+
+  &.hasError {
+    // & label {
+    //   padding: 0 0 10px 0;
+    //   text-transform: uppercase;
+    //   font-weight: 700;
+    //   color: #767676;
+    // }
+  
+    & input {
+      border: 1px solid red;
+      &:focus {
+        border: 1px solid red;
+        outline: none;
+      }
+    }
   }
 }

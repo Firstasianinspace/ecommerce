@@ -1,33 +1,37 @@
 <template>
-  <form class="login-form">
+  <form class="login-form" autocomplete="it-course-login-form">
     <CustomInputEmail
       v-model="formData.email"
       :label="'Email'"
+      :uniq="`it-course-user-email`"
       :placeholder="'Ваш email'"
       :v="$v.formData.email"
     />
     <CustomInputPassword
       v-model="formData.password"
+      :show-button="false"
       :label="'Пароль'"
       :placeholder="'Ваш пароль'"
       :v="$v.formData.password"
     />
+    <div v-if="error" class="login-form__errors">
+      {{ error }}
+    </div>
     <custom-button
       :label="'Вход'"
       class="login-form__btn"
       @click="signInUser()"
     />
     <a href="#" class="login-form__restore"> Забыли пароль? </a>
-    {{ errorAttempts }}
   </form>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex'
 import { required, email, minLength, maxLength } from 'vuelidate/lib/validators'
+import { debounce } from 'lodash'
 import CustomInputEmail from '@/components/common/CustomInputEmail'
 import CustomInputPassword from '@/components/common/CustomInputPassword'
-import { ERROR_TOO_MANY_ATTEMPTS, ERROR_TOO_MANY_ATTEMPTS_RU, ERROR_INVALID_PASSWORD, ERROR_INVALID_PASSWORD_RU } from '@/helpers/constants';
 
 export default {
   name: 'LoginForm',
@@ -43,30 +47,50 @@ export default {
   }),
   validations: {
     formData: {
-      email: { required, email, maxLength: maxLength(30) },
-      password: { required, minLength: minLength(6), maxLength: maxLength(25) },
+      email: {
+        required,
+        email,
+        maxLength: maxLength(30),
+      },
+      password: {
+        required,
+        minLength: minLength(6),
+        maxLength: maxLength(25),
+      },
     },
   },
   computed: {
     ...mapGetters('user', ['error']),
 
-    errorAttempts: (vm) => vm.error === ERROR_TOO_MANY_ATTEMPTS ? ERROR_TOO_MANY_ATTEMPTS_RU : null,
-    errorWrongPassword: (vm) => vm.error === ERROR_INVALID_PASSWORD ? ERROR_INVALID_PASSWORD_RU : null,
-
+    email: (vm) => vm.formData.email,
+    password: (vm) => vm.formData.password,
+  },
+  watch: {
+    email(newValue, oldValue) {
+      if (newValue !== oldValue) {
+        this.debouncedWatch(newValue, oldValue)
+      }
+    },
+  },
+  created() {
+    this.debouncedWatch = debounce(() => {
+      this.$v.formData.email.$touch()
+    }, 1000)
+  },
+  beforeUnmount() {
+    this.debouncedWatch.cancel()
   },
   methods: {
     ...mapActions('user', ['signInAction']),
 
-    async signInUser() {
-      try {
-        await this.signInAction({ email: this.formData.email, password: this.formData.password })
-        if (this.user) {
-          this.$router.push('/catalog');
-        } else {
-          return null;
-        }
-      } catch (e) {
-        alert(e);
+    signInUser() {
+      if (this.$v.$invalid) {
+        this.$v.formData.$touch()
+      } else {
+        this.signInAction({
+          email: this.formData.email,
+          password: this.formData.password,
+        })
       }
     },
   },
@@ -96,6 +120,15 @@ export default {
     font-size: 14px;
     color: #767676;
   }
+
+  &__errors {
+    padding: 0 0 0 25px;
+    margin: 0 25px 25px 0;
+
+    &-item {
+      font-size: 14px;
+    }
+  }
 }
 /*
 ** Input field
@@ -114,5 +147,12 @@ export default {
   & input {
     padding: 12px 10px;
   }
+
+  &.hasError {
+    & input {
+      border: 1px solid red;
+    }
+  }
 }
+
 </style>

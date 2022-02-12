@@ -1,12 +1,12 @@
 import { setField } from './helpers';
 
 const state = () => ({
-  dialogs: [],
   products: [],
 });
 
 const getters = {
   products: ({ products }) => products,
+  allCategories: ({ products }) => [...new Set(products.map((product) => product.category))]
 };
 
 const actions = {

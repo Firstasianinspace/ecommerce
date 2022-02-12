@@ -1,16 +1,14 @@
 import { setField } from './helpers';
+import { handleFirebaseAuthError } from '@/helpers/errors';
 
 const state = () => ({
   error: null,
+  errors: [],
   user: null,
   shippingData: {
     firstName: null,
     lastName: null,
-    streetName: null,
-    city: null,
-    province: null,
-    zipCode: null,
-    country: null,
+    address: null,
     phone: null,
     shippingMethod: null,
   },
@@ -29,20 +27,22 @@ const actions = {
       .auth.createUserWithEmailAndPassword(payload.email, payload.password)
       .then(response => {
         commit('setField', { field: 'user', value: response });
+        this.$router.push('/catalog');
       })
       .catch(error => {
-        commit('setField', { field: 'error', value: error });
+        commit('setField', { field: 'error', value: handleFirebaseAuthError(error.code) });
       });
   },
   async signInAction({ commit }, payload) {
+    commit('setField', { field: 'error', value: null });
     await this.$fire
-      
       .auth.signInWithEmailAndPassword(payload.email, payload.password)
       .then(response => {
-        commit("setUser", response.user);
+        commit('setField', { field: 'user', value: response.user });
+        this.$router.push('/catalog');
       })
       .catch(error => {
-        commit("setError", error.message);
+        commit('setField', { field: 'error', value: handleFirebaseAuthError(error.code) })
       });
   },
   setShippingInfo({ commit }, shippingData) {
@@ -52,12 +52,6 @@ const actions = {
 
 const mutations = {
   setField,
-  setUser(state, payload) {
-    state.user = payload;
-  },
-  setError(state, payload) {
-    state.error = payload;
-  }
 };
 
 export default {

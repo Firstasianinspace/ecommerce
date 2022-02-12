@@ -49,7 +49,7 @@ export default {
         },
         {
           label: 'Регистрация',
-          class: this.isLogin ? 'disable' : 'active',
+          class: this.isLogin ? null : 'active',
         },
       ]
     },
@@ -92,13 +92,9 @@ export default {
   padding: 0 30px;
 }
 
-.disable {
-  pointer-events: none;
-}
-
 .active {
   color: #222;
-  border-bottom: 1px solid #0770cf;
+  border-bottom: 1px solid #5ECE7B;
   pointer-events: none;
 }
 </style>

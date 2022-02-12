@@ -1,23 +1,26 @@
 <template>
-  <div
-  class="form-field"
-  :class="{ 'hasError': v.$error }"
-  >
-    <label v-if="label" class="form-label">{{ label }}</label>
+  <div class="form-field" :class="{ hasError: v.$error }">
+    <label v-if="label" :for="uniq" class="form-label">{{ label }}</label>
     <input
       :id="uniq"
       v-model="email"
-      :name="uniq"
       value=""
       type="email"
-      autocomplete="email"
+      :autocomplete="uniq"
       :placeholder="placeholder"
     />
-    <div v-if="v.$error" class="form-field__errors">
-      <div v-if="!v.required">Email is a required field</div>
-      <div v-if="!v.email">Email is not a properly formatted email address</div>
-      <div v-if="!v.maxLength">Email max length is 30 symbols</div>
-    </div>
+
+    <ul v-if="v.$error" class="form-field__errors">
+      <li v-if="!v.required" class="form-field__errors-item">
+        Email обязательное поле
+      </li>
+      <li v-if="!v.email" class="form-field__errors-item">
+        Email введен некорректно
+      </li>
+      <li v-if="!v.maxLength" class="form-field__errors-item">
+        Email максимально 30 символов
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -26,42 +29,42 @@ export default {
   props: {
     disabled: {
       type: Boolean,
-      default: false
+      default: false,
     },
     value: {
       type: String,
-      default: ''
+      default: '',
     },
     v: {
       type: Object,
-      required: true
+      required: true,
     },
     placeholder: {
       type: String,
-      default: 'Placeholder'
+      default: 'Placeholder',
     },
     uniq: {
       type: String,
-      default: 'uniq'
+      default: 'uniq',
     },
     label: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
   computed: {
     email: {
-      get () {
+      get() {
         return this.value
       },
-      set (value) {
+      set(value) {
         this.$emit('input', value)
-      }
-    }
-  }
+      },
+    },
+  },
+  watch: {},
 }
 </script>
 
 <style lang="scss" scoped>
-
 </style>

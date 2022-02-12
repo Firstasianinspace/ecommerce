@@ -23,6 +23,7 @@
         />
       </div>
     </div>
+    <CreditCardModal />
   </div>
 </template>
 
@@ -31,6 +32,7 @@ import { mapGetters, mapActions } from 'vuex'
 import SfSteps from '@/components/SfSteps.vue'
 import SfOrderSummary from '@/components/SfOrderSummary'
 import SfStep from '@/components/SfStep.vue'
+import CreditCardModal from '@/components/cardForm/CreditCardModal';
 
 const details = () => import('@/components/details.vue');
 const Shipping = () => import('@/components/Shipping.vue');
@@ -43,6 +45,7 @@ export default {
     SfSteps,
     SfStep,
     SfOrderSummary,
+    CreditCardModal,
   },
   middleware: 'emptyCart',
   data: () => ({

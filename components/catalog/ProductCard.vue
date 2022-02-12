@@ -253,6 +253,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '~@storefront-ui/shared/styles/components/organisms/SfProductCard.scss';
+
 .sf-product-card {
   min-width: 100%;
 }
