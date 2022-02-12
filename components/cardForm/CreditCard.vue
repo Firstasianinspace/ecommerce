@@ -135,7 +135,7 @@
                         </span>
                       </transition-group>
                     </div>
-                    <div v-else key="2" class="card-item__name">Full Name</div>
+                    <div v-else key="2" class="card-item__name">Имя владельца</div>
                   </transition>
                 </label>
                 <div ref="cardDate" class="card-item__date">

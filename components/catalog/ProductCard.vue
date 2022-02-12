@@ -255,10 +255,6 @@ export default {
 <style lang="scss" scoped>
 @import '~@storefront-ui/shared/styles/components/organisms/SfProductCard.scss';
 
-.sf-product-card {
-  min-width: 100%;
-}
-
 .custom-button__add {
   margin: 0 0 15px 0;
 }
