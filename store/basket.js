@@ -36,6 +36,9 @@ const mutations = {
   addToBasket(state, product) {
     state.basket.push(product);
   },
+  updateQuantity(state, product) {
+    
+  },
   removeFromBasket(state, index) {
     state.basket.splice(index, 1)
   }

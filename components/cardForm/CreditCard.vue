@@ -283,13 +283,15 @@
           </div>
         </div>
 
-        <button class="card-form__button">Сохранить</button>
+        <button class="card-form__button" @click="savePayment()">Сохранить</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   name: 'CardForm',
   data: () => ({
@@ -349,6 +351,8 @@ export default {
     document.getElementById('cardNumber').focus()
   },
   methods: {
+    ...mapActions('user', ['setPaymentMethod']),
+
     flipCard(status) {
       this.isCardFlipped = status
     },
@@ -371,6 +375,17 @@ export default {
       }, 300)
       vm.isInputFocused = false
     },
+    savePayment() {
+      const paymentObject = {
+        cardType: this.getCardType,
+        cardName: this.cardName,
+        cardNumber: this.cardNumber,
+        cardMonth: this.cardMonth,
+        cardYear: this.cardYear,
+        cardCvv: this.cardCvv,
+      };
+      this.setPaymentMethod(paymentObject);
+    }
   },
 }
 </script>

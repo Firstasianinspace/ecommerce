@@ -19,13 +19,16 @@ export default {
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     '@/assets/scss/main.scss',
+    'swiper/css/swiper.css',
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     '@/plugins/global.js',
     '@/plugins/vuelidate.js',
-    '@/plugins/filters.js'
+    '@/plugins/persistedState.client.js',
+    '@/plugins/filters.js',
+    { src: '@/plugins/vue-awesome-swiper', mode: 'client' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

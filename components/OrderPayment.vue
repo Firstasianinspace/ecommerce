@@ -1,15 +1,17 @@
 <template>
   <div class="order-payment">
     <h4>Способы оплаты</h4>
-    <div class="order-payment__empty">
+    <div v-if="paymentMethod === null" class="order-payment__empty">
       Нет доступных способов оплаты
       <custom-button
         :label="'Добавить способ оплаты'"
-        class="login-form__btn"
+        class="classic-btn"
         @click="addPaymentMethod('credit-card')"
       />
     </div>
-    <div class="order-payment__methods"></div>
+    <div v-else class="order-payment__methods">
+      {{ lastFourDigits }}
+    </div>
   </div>
 </template>
 
@@ -23,7 +25,10 @@ export default {
     CreditCardModal
   },
   computed: {
-    ...mapGetters('user', ['paymentMethods']),
+    ...mapGetters('user', ['paymentMethod']),
+
+    lastFourDigits: (vm) => vm.paymentMethod?.cardNumber,
+
   },
   methods: {
     ...mapActions('modals', ['openModal']),

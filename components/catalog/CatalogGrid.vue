@@ -4,29 +4,34 @@
       v-for="product in products"
       :key="product.id"
       :product="product"
-      @addToBasket="addToBasket(product)"
+      @addToBasket="handleClick(product)"
     />
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
-import ProductCard from './ProductCard';
-  export default {
-    name: 'CatalogGrid',
-    components: {
-      ProductCard
+import { mapActions } from 'vuex'
+import ProductCard from '@/components/ProductCard'
+export default {
+  name: 'CatalogGrid',
+  components: {
+    ProductCard,
+  },
+  props: {
+    products: {
+      type: Array,
+      default: () => [],
     },
-    props: {
-      products: {
-        type: Array,
-        default: () => [],
-      }
-    },
-    methods: {
-          ...mapActions('basket', ['addToBasket'])
+  },
+  methods: {
+    ...mapActions('basket', ['addToBasket']),
+
+    handleClick(product) {
+      console.log('test')
+      this.$router.push(`product/${product.id}`)
     }
-  }
+  },
+}
 </script>
 
 <style lang="scss" scoped>

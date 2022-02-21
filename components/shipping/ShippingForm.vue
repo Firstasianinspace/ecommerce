@@ -36,7 +36,11 @@
         :v="$v.shippingData.phone"
       />
     </div>
-    <button class="testing" @click.prevent="submitShippingInfo">click!</button>
+    <custom-button
+      :label="'Сохранить адрес'"
+      class="classic-btn"
+      @click="saveShippingInfo"
+    />
   </form>
 </template>
 
@@ -74,7 +78,7 @@ export default {
   methods: {
     ...mapActions('user', ['setShippingInfo']),
 
-    submitShippingInfo() {
+    saveShippingInfo() {
       this.setShippingInfo(this.shippingData)
     },
   },

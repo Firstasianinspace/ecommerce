@@ -5,20 +5,15 @@ const state = () => ({
   error: null,
   errors: [],
   user: null,
-  shippingData: {
-    firstName: null,
-    lastName: null,
-    address: null,
-    phone: null,
-    shippingMethod: null,
-  },
-  paymentMethods: null,
+  shippingData: null,
+  paymentMethod: null,
 });
 
 const getters = {
   user: ({ user }) => user,
   error: ({ error }) => error,
-  paymentMethods: ({ paymentMethods }) => paymentMethods,
+  shippingData: ({ shippingData }) => shippingData,
+  paymentMethod: ({ paymentMethod }) => paymentMethod,
 };
 
 const actions = {
@@ -45,8 +40,11 @@ const actions = {
         commit('setField', { field: 'error', value: handleFirebaseAuthError(error.code) })
       });
   },
-  setShippingInfo({ commit }, shippingData) {
-    commit('setField', shippingData)
+  setShippingInfo({ commit }, payload) {
+    commit('setField', { field: 'shippingData', value: payload })
+  },
+  setPaymentMethod({ commit }, payload) {
+    commit('setField', { field: 'paymentMethod', value: payload })
   }
 };
 

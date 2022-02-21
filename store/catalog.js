@@ -11,7 +11,7 @@ const getters = {
 
 const actions = {
   async getProducts({ commit }) {
-    const data = await this.$axios.$get('https://api.npoint.io/7065dcc47bae35f189a6');
+    const data = await this.$axios.$get('https://api.npoint.io/307094c9f6932e4631bf');
     commit('setField', { field: 'products', value: data.items });
   },
 };
