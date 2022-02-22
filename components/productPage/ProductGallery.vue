@@ -14,7 +14,7 @@
         />
       </swiper>
       <swiper
-        ref="mySwiper"
+        ref="swiperTop"
         :options="swiperOptionTop"
         class="swiper gallery-main"
       >
@@ -54,7 +54,9 @@ export default {
   },
   data: () => ({
     swiperOptionTop: {
-      loopedSlides: 5, // looped slides should be the same
+      loop: true,
+      centeredSlides: true,
+      loopedSlides: 5,
       spaceBetween: 10,
       navigation: {
         nextEl: '.swiper-button-next',
@@ -62,22 +64,24 @@ export default {
       },
     },
     swiperOptionThumbs: {
+      loop: true,
+      loopedSlides: 5,
       direction: 'vertical',
-      loopedSlides: 5, // looped slides should be the same
       spaceBetween: 10,
       slidesPerView: 5,
+      centeredSlides: true,
       touchRatio: 0.2,
       slideToClickedSlide: true,
     },
   }),
-  // mounted() {
-  //   this.$nextTick(() => {
-  //     const swiperTop = this.$refs.swiperTop.$swiper
-  //     const swiperThumbs = this.$refs.swiperThumbs.$swiper
-  //     swiperTop.controller.control = swiperThumbs
-  //     swiperThumbs.controller.control = swiperTop
-  //   })
-  // },
+  mounted() {
+    this.$nextTick(() => {
+      const swiperTop = this.$refs.swiperTop.$swiper
+      const swiperThumbs = this.$refs.swiperThumbs.$swiper
+      swiperTop.controller.control = swiperThumbs
+      swiperThumbs.controller.control = swiperTop
+    })
+  },
 }
 </script>
 
