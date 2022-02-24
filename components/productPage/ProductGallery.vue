@@ -39,6 +39,7 @@
 
 <script>
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
+// import 'swiper/swiper.scss'
 
 export default {
   name: 'ProductGallery',

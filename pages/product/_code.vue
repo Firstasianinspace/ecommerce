@@ -5,17 +5,12 @@
         <ProductGallery :images="productImages" />
         <ProductInfo :product="product" />
       </div>
-      <custom-button
-        :label="'Добавить в корзину'"
-        class="product-card__footer-btn"
-        @click="addToBasket(product)"
-      />
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 import ProductGallery from '@/components/productPage/ProductGallery'
 import ProductInfo from '@/components/productPage/ProductInfo'
 
@@ -32,9 +27,7 @@ export default {
       vm.products.find((s) => s.id === parseInt(vm.$route.params.code)),
     productImages: (vm) => vm.product?.images,
   },
-  methods: {
-    ...mapActions('basket', ['addToBasket']),
-  },
+
 }
 </script>
 
