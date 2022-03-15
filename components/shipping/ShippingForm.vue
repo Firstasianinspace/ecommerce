@@ -105,7 +105,7 @@ export default {
 .vue-dadata__input {
   border: 1px solid #000;
   &:focus {
-    box-shadow: none;
+    box-shadow: none !important;
     border-color: #000;
   }
 }

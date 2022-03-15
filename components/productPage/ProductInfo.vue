@@ -17,11 +17,11 @@
     <div class="product-info__sizes">
       <div class="product-info__label">Размер:</div>
       <span class="product-info__sizes-single">
-        {{ formPharmacyType || availableSizes[0] }}
+        {{ selectedSize || availableSizes[0] }}
       </span>
       <custom-select
         v-if="!singleSize"
-        v-model="formPharmacyType"
+        v-model="selectedSize"
         :items="availableSizes"
       />
     </div>
@@ -62,7 +62,7 @@ export default {
     },
   },
   data: () => ({
-    formPharmacyType: null,
+    selectedSize: null,
   }),
   computed: {
     availableColors: (vm) => vm.product?.availableColors,
@@ -76,7 +76,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .product-info {
   padding: 30px 180px 0 0;
   display: flex;
@@ -104,6 +104,18 @@ export default {
   }
 
   &__sizes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    &-single {
+    }
+
+    & .b-field {
+      grid-column: 1 / 3;
+    }
+    // &-single {
+    //   grid-column: 1 / 3;
+    // }
   }
 
   &__buttons {

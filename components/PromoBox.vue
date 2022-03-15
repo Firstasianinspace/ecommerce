@@ -3,7 +3,8 @@
     <font-awesome-icon :icon="['fas', 'tag']" />
     <div class="promo-box__text">
       ТОЛЬКО СЕЙЧАС <br />
-      Получи скидку -20% c промокодом: FUCKYOUISAINTCHEAP
+      Получи скидку -20% c промокодом:
+      <span>ISAINTCHEAP</span>
     </div>
   </div>
 </template>

@@ -14,9 +14,9 @@
         />
       </div>
       <div class="checkout-page-content__right">
-        <SfOrderSummary
+        <OrderSummary
           :products="products"
-          :sub-total="subTotal"
+          :sub-total="basketTotal"
           :total="basketTotal"
           :shipping-methods="null"
           :total-items="basketCount"
@@ -30,7 +30,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import SfSteps from '@/components/SfSteps.vue'
-import SfOrderSummary from '@/components/SfOrderSummary'
+import OrderSummary from '@/components/OrderSummary'
 import SfStep from '@/components/SfStep.vue'
 import CreditCardModal from '@/components/cardForm/CreditCardModal';
 
@@ -44,7 +44,7 @@ export default {
   components: {
     SfSteps,
     SfStep,
-    SfOrderSummary,
+    OrderSummary,
     CreditCardModal,
   },
   middleware: 'emptyCart',

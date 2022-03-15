@@ -1,12 +1,12 @@
 <template>
-  <div class="catalog-grid">
+  <transition-group name="flip-list" class="catalog-page__grid">
     <ProductCard
       v-for="product in products"
       :key="product.id"
       :product="product"
       @addToBasket="handleClick(product)"
     />
-  </div>
+  </transition-group>
 </template>
 
 <script>
@@ -27,17 +27,19 @@ export default {
     ...mapActions('basket', ['addToBasket']),
 
     handleClick(product) {
-      console.log('test')
       this.$router.push(`product/${product.id}`)
-    }
+    },
   },
 }
 </script>
 
 <style lang="scss" scoped>
-.catalog-grid {
+.catalog-page__grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   grid-gap: 30px;
+}
+.flip-list-move {
+  transition: transform 0.4s;
 }
 </style>

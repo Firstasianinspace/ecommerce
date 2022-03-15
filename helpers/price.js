@@ -7,6 +7,11 @@ export const formatPrice = (value) => {
   // пример, на выходе: "1 091.21"
 };
 
+export const getCurrentPrice = (product = {}) => {
+  const { price, discountPrice } = product;
+  return discountPrice === 0 ? price : discountPrice
+};
+
 export const getPriceByOffer = (offer, isPharmacist = false) => {
   const {
     priceStoresFrom,
