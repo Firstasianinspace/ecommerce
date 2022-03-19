@@ -20,7 +20,7 @@
     <div class="product-card__footer">
       <custom-button
         :label="'Подробнее'"
-        class="product-card__footer-btn"
+        class="product-card__footer-btn btn-text"
         @click="addToBasket(product)"
       />
       <ProductPrice v-bind="bindProps" />
@@ -85,106 +85,4 @@ export default {
 </script>
 
 <style lang="scss">
-.product-card:hover {
-  & .product-card {
-    &__header {
-      &_bar {
-        transform: translate(-50%, -111%);
-      }
-    }
-    &__footer {
-      & .product-price {
-        transform: translate(50%);
-        opacity: 0;
-      }
-      &-btn {
-        transform: translate(0);
-        opacity: 1;
-      }
-    }
-  }
-}
-
-.product-card {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  overflow: hidden;
-
-  &__header {
-    position: relative;
-    overflow: hidden;
-
-    &_bar {
-      
-      color: #fff;
-      font-size: 12px;
-      font-weight: 500;
-      display: flex;
-      justify-content: center;
-      position: absolute;
-      left: 50%;
-      transform: translate(-50%, 50%);
-      transition: all .3s ease-in-out;
-
-      &-quick-view {
-        background: #222;
-        padding: 5px 10px;
-        cursor: pointer;
-      }
-    }
-  }
-
-  &__image {
-    width: 100%;
-  }
-
-  &__body {
-    &-title {
-      font-size: 18px;
-      padding: 10px 0;
-    }
-
-    &-description {
-      font-size: 14px;
-    }
-  }
-
-  &__footer {
-    margin-top: auto;
-    position: relative;
-
-    & .product-price {
-      transition: all .3s ease-in-out;
-    }
-
-    &-btn {
-      font-size: 16px;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 1.2px;
-      position: absolute;
-      transform: translate(-100%);
-      transition: all .3s ease-in-out;
-      opacity: 0;
-      color: #767676;
-      background: none;
-      border: none;
-      padding: 10px 0;
-      cursor: pointer;
-    }
-  }
-
-  &__discount {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 15px 10px;
-    background: #111;
-
-    & span {
-      color: #fff;
-    }
-  }
-}
 </style>

@@ -4,16 +4,14 @@
       <h6>Total</h6>
     </div>
     <div class="order-summary__body">
-      <Property name="Всего" :value="pluralProducts" />
-      <Property name="Доставка" :value="deliveryPrice" />
-      <Property name="Итого" :value="total + ' руб.'" />
+      <ul class="order-summary__list">
+        <Property name="Всего" :value="pluralProducts" />
+        <Property name="Доставка" :value="deliveryPrice" />
+        <Property name="Итого" :value="total + ' руб.'" />
+      </ul>
     </div>
     <div class="order-summary__footer">
-      <CustomButton
-        class="none"
-        @click="$emit('click:back')"
-        >В каталог</CustomButton
-      >
+      <CustomButton @click="handleClick">К оплате</CustomButton>
     </div>
   </div>
 </template>
@@ -51,10 +49,23 @@ export default {
   },
   computed: {
     pluralProducts: (vm) => pluralProducts(vm.totalItems),
-    deliveryPrice: (vm) => 'Бесплатно',
+    deliveryPrice: () => 'Бесплатно',
+  },
+  methods: {
+    handleClick() {
+      this.$router.push('/checkout')
+    },
   },
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.order-summary__list {
+  & .property-field {
+    &:last-of-type {
+      padding: 15px 0 35px 0;
+      border-top: 1px solid grey;
+    }
+  }
+}
 </style>

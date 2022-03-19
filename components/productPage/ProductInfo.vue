@@ -130,7 +130,7 @@ export default {
   font-weight: 500;
   text-transform: uppercase;
   color: #fff;
-  background: #018849;
+  background: #151515;
   padding: 7.5px 0;
 }
 </style>

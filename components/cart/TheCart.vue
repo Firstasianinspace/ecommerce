@@ -135,7 +135,7 @@ export default {
     ...mapMutations('basket', ['toggleCartSidebar']),
 
     goToCart() {
-      this.$router.push('/checkout')
+      this.$router.push('/cart')
       this.toggleCartSidebar()
     }
   },

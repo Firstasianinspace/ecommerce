@@ -1,5 +1,5 @@
 <template functional>
-  <div class="property-field">
+  <li class="property-field">
     <slot name="name" v-bind="{ props }">
       <span class="property-field__name">
         {{ props.name }}
@@ -10,7 +10,7 @@
         {{ props.value }}
       </span>
     </slot>
-  </div>
+  </li>
 </template>
 
 <script>
@@ -35,7 +35,7 @@ export default {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 7.5px 0;
+  padding: 10px 0;
 
   &__name {
     color: #43464e;

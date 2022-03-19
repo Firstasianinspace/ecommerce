@@ -21,5 +21,7 @@ export default {
       default: 'button',
     },
   },
-};
+}
 </script>
+<style lang="scss" scoped>
+</style>
