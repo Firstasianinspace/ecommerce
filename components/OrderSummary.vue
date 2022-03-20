@@ -17,14 +17,10 @@
 </template>
 
 <script>
-import Property from '@/components/common/Property'
 import { pluralProducts } from '@/helpers'
 
 export default {
   name: 'OrderSummary',
-  components: {
-    Property,
-  },
   props: {
     order: {
       type: Object,

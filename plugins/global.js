@@ -21,6 +21,7 @@ import CustomImage from '@/components/common/CustomImage';
 // import AppLink from '@/components/common/AppLink';
 import loading from '@/directives/loading';
 import lazyload from '@/directives/lazyload';
+import Property from '@/components/common/Property'
 // import RecaptchaProvider from '@/components/common/RecaptchaProvider';
 // import IntersectionObserver from '@/components/common/IntersectionObserver';
 // import ScrollObserver from '@/components/common/ScrollObserver';
@@ -43,6 +44,7 @@ Vue.directive('lazyload', lazyload);
 // Vue.component('custom-select', CustomSelect);
 // Vue.component('custom-switch', CustomSwitch);
 // Vue.component('custom-textarea', CustomTextarea);
+Vue.component('Property', Property);
 Vue.component('CustomButton', CustomButton);
 Vue.component('CustomImage', CustomImage);
 // Vue.component('custom-checkbox', CustomCheckbox);
