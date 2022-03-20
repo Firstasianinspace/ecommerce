@@ -24,7 +24,7 @@ const actions = {
   },
   setSortOption({ commit }, option) {
     commit('setField', { field: 'activeOption', value: option })
-  }
+  },
 };
 
 const mutations = {
