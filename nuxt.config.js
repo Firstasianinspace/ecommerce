@@ -90,7 +90,7 @@ export default {
     '/api/': {
       target: 'http://193.168.48.193:8081/v1',
       pathRewrite: {
-        '^/api': '/'
+        '^/api': 'http://193.168.48.193:8081/v1'
       },
     }
   },
