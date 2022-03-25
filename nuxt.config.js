@@ -1,7 +1,6 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
-  target: 'static',
-  ssr: false,
+  mode: 'universal',
   // server: {
   //   host: '192.168.0.105' // default: localhost
   // },
@@ -89,6 +88,9 @@ export default {
   proxy: {
     '/api/': {
       target: 'http://193.168.48.193:8081/v1',
+      pathRewrite: {
+        '^/api': '/'
+      },
     }
   },
   firebase: {

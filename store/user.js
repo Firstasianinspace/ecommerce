@@ -50,7 +50,7 @@ const actions = {
   async getPaymentMethods({ commit }, payload ) {
     const { createdAt } = payload
     // TO-DO слишком жесткая привязка, переделать
-    const data = await this.$axios.$get(`api/v1/get_cards_by_user_id?user_id=${createdAt}`);
+    const data = await this.$axios.$get(`/api/get_cards_by_user_id?user_id=${createdAt}`);
     const mockObject = {
       cvv: '777',
       expirationDate: '2025-03-24T23:24:28.380Z',
