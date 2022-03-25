@@ -19,7 +19,7 @@ const getters = {
 
 const actions = {
   async getProducts({ commit }) {
-    const data = await this.$axios.$get('http://193.168.48.193:8081/v1/items?offset=0&limit=50');
+    const data = await this.$axios.$get('/api/v1/items?offset=0&limit=50');
     const newArray = data.items.map((s) => {
       if (s.price) return s
       return ({

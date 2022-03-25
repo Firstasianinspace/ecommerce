@@ -80,7 +80,7 @@ export default {
       }
       try {
         console.log(data)
-        await this.$axios.$post('http://193.168.48.193:8081/v1/buy2', data)
+        await this.$axios.$post('/api/v1/buy2', data)
       } catch (e) {
         console.log(e)
       }
