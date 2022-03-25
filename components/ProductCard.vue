@@ -36,6 +36,8 @@ import { calculateDiscountPercentage } from '@/helpers'
 import ProductPrice from '@/components/product/ProductPrice'
 import ProductFavoriteIcon from '@/components/product/ProductFavoriteIcon'
 
+export const NOIMAGE_URL = '/img/noimg.png';
+
 export default {
   name: 'ProductCard',
   components: {
@@ -57,8 +59,8 @@ export default {
     },
   },
   computed: {
-    productName: (vm) => vm.product?.item || vm.defaultName,
-    productImage: (vm) => vm.product?.images[0].url,
+    productName: (vm) => vm.product?.title || vm.defaultName,
+    productImage: (vm) => vm.product?.images ? vm.product?.images[0].url : NOIMAGE_URL,
     productDescription: (vm) => vm.product?.description,
     regularPrice: (vm) => vm.product?.price,
     specialPrice: (vm) => vm.product?.discountPrice,

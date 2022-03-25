@@ -19,8 +19,16 @@ const getters = {
 
 const actions = {
   async getProducts({ commit }) {
-    const data = await this.$axios.$get('https://api.npoint.io/bc97aa3b90affca44a88');
-    commit('setField', { field: 'products', value: data.items });
+    const data = await this.$axios.$get('/api/v1/items?offset=0&limit=50');
+    const newArray = data.items.map((s) => {
+      if (s.price) return s
+      return ({
+        ...s,
+        price: 100500,
+        discountPrice: 0,
+      })
+    })
+    commit('setField', { field: 'products', value: newArray });
   },
   setSortOption({ commit }, option) {
     commit('setField', { field: 'activeOption', value: option })

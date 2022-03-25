@@ -1,20 +1,20 @@
 <template>
   <div class="product-info">
     <h1 class="product-info__name">
-      {{ product.item }}
+      {{ product.title }}
     </h1>
     <div class="product-info__price">
       {{ product.price }}
     </div>
     <PromoBox />
-    <div class="product-info__colors">
+    <div v-if="product.availableColors" class="product-info__colors">
       <div class="product-info__label">Цвет:</div>
       <div class="product-info__colors-single">
         {{ availableColors[0].name }}
       </div>
       <!-- <ColorPicker v-else :colors="availableColors" /> -->
     </div>
-    <div class="product-info__sizes">
+    <div v-if="product.availableSizes" class="product-info__sizes">
       <div class="product-info__label">Размер:</div>
       <span class="product-info__sizes-single">
         {{ selectedSize || availableSizes[0] }}

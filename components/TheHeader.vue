@@ -56,7 +56,7 @@ export default {
   methods: {
     ...mapMutations('basket', ['toggleCartSidebar', 'basketCount']),
     toggleCartSidebar2() {
-      this.toggleCartSidebar()
+      this.$router.push('/cart')
     }
   }
 }

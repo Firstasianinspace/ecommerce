@@ -2,7 +2,9 @@
   <div class="product-page">
     <div class="container">
       <div class="product-page__content">
-        <ProductGallery :images="productImages" />
+        <ProductGallery v-if="galleryActive" :images="productImages" />
+        <custom-image v-else :src="productImage" />
+
         <ProductInfo :product="product" />
       </div>
     </div>
@@ -24,10 +26,13 @@ export default {
     ...mapGetters('catalog', ['products']),
 
     product: (vm) =>
-      vm.products.find((s) => s.id === parseInt(vm.$route.params.code)),
-    productImages: (vm) => vm.product?.images,
+      vm.products.find(
+        (s) => parseInt(s.itemId) === parseInt(vm.$route.params.code)
+      ),
+    productImage: (vm) => vm.product?.itemImageUrl,
+    galleryActive: (vm) => Array.isArray(vm.product?.itemImageUrl),
+    // productImages: (vm) => vm.product?.itemImageUrl ? vm.product?.itemImageUrl : vm.product?.images,
   },
-
 }
 </script>
 

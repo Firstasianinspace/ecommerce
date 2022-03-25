@@ -31,7 +31,7 @@ export default {
   },
   computed: {
     productName: (vm) => vm.product?.item || vm.defaultName,
-    productImage: (vm) => vm.product?.images[0].url,
+    productImage: (vm) => vm.product?.itemImageUrl,
     productDescription: (vm) => vm.product?.description,
     regularPrice: (vm) => vm.product?.price,
     specialPrice: (vm) => vm.product?.discountPrice,

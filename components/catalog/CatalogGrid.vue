@@ -1,8 +1,8 @@
 <template>
-  <transition-group name="flip-list" class="catalog-page__grid">
+  <transition-group name="flip-list" class="catalog-page__grid" tag="div">
     <ProductCard
-      v-for="product in products"
-      :key="product.id"
+      v-for="(product, index) in products"
+      :key="index"
       :product="product"
       @addToBasket="handleClick(product)"
     />
@@ -27,7 +27,7 @@ export default {
     ...mapActions('basket', ['addToBasket']),
 
     handleClick(product) {
-      this.$router.push(`product/${product.id}`)
+      this.$router.push(`product/${product.itemId}`)
     },
   },
 }

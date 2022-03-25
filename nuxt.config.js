@@ -2,18 +2,36 @@ export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   target: 'static',
   ssr: false,
+  // server: {
+  //   host: '192.168.0.105' // default: localhost
+  // },
   head: {
     title: 'ecommerce',
     htmlAttrs: {
       lang: 'en',
     },
-    meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' },
+    meta: [{
+        charset: 'utf-8'
+      },
+      {
+        name: 'viewport',
+        content: 'width=device-width, initial-scale=1'
+      },
+      {
+        hid: 'description',
+        name: 'description',
+        content: ''
+      },
+      {
+        name: 'format-detection',
+        content: 'telephone=no'
+      },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    link: [{
+      rel: 'icon',
+      type: 'image/x-icon',
+      href: '/favicon.ico'
+    }],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -28,7 +46,11 @@ export default {
     '@/plugins/vuelidate.js',
     '@/plugins/persistedState.client.js',
     '@/plugins/filters.js',
-    { src: '@/plugins/vue-awesome-swiper', mode: 'client' },
+    {
+      src: '@/plugins/vue-awesome-swiper',
+      mode: 'client'
+    },
+    // '@/plugins/axios.js'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -47,6 +69,7 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/firebase',
     '@storefront-ui/nuxt',
+    '@nuxtjs/proxy',
   ],
 
   fontawesome: {
@@ -58,7 +81,18 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '/',
+    // baseURL: 'http://193.168.48.193:8081/v1',
+    proxy: true,
+    //   proxyHeadersIgnore: ['accept', 'host', 'x-forwarded-host', 'x-forwarded-port', 'x-forwarded-proto', 'cf-ray', 'cf-connecting-ip', 'content-length', 'content-md5', 'content-type'],
+    // },
+  },
+  proxy: {
+    '/api/': {
+      target: 'http://193.168.48.193:8081',
+      pathRewrite: {
+        '^/api': '/'
+      },
+    }
   },
   firebase: {
     config: {

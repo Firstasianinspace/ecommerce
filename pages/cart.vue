@@ -4,7 +4,7 @@
       <div class="checkout-page-content__left">
         <ProductCardHorizontal
           v-for="product in basket"
-          :key="product.itemCode"
+          :key="product.itemId"
           :product="product"
           @click:remove="removeFromBasket(index)"
         />
@@ -89,7 +89,7 @@ export default {
 
     removeHandler(product) {
       const products = [...this.products]
-      this.products = products.filter((element) => element.id !== product.id)
+      this.products = products.filter((element) => element.itemId !== product.itemId)
     },
     nextStep() {
       if (this.active === 3) {

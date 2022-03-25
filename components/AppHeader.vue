@@ -236,7 +236,7 @@ export default {
   methods: {
     ...mapMutations('basket', ['toggleCartSidebar']),
     toggleCartSidebar2() {
-      this.toggleCartSidebar()
+      this.$router.push('/cart')
     },
     toggleWishSidebar2() {
       console.log('testing')
