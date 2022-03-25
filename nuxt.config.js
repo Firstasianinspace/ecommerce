@@ -1,6 +1,6 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
-  mode: 'universal',
+  target: 'static',
   // server: {
   //   host: '192.168.0.105' // default: localhost
   // },
@@ -109,4 +109,7 @@ export default {
   },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+  generate: {
+    fallback: true
+  }
 }
