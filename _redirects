@@ -1,0 +1,2 @@
+# Redirects from what the browser requests to what we serve
+/api/* https://193.168.48.193:8081/:splat 200
