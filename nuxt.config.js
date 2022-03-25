@@ -89,9 +89,6 @@ export default {
   proxy: {
     '/api/': {
       target: 'http://193.168.48.193:8081/v1',
-      pathRewrite: {
-        '^/api': '/'
-      },
     }
   },
   firebase: {
