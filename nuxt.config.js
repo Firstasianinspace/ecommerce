@@ -1,3 +1,11 @@
+
+const dynamicRoutes = () => {
+  return new Promise(resolve => {
+    const data = this.$axios.get('http://193.168.48.193:8081/v1/items?offset=0&limit=50');
+    resolve(data.items.map(el => `product/${el.id}`))
+  })
+}
+
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   target: 'static',
@@ -110,6 +118,7 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
   generate: {
-    fallback: true
+    fallback: true,
+    routes: dynamicRoutes,
   }
 }
