@@ -53,20 +53,9 @@ export default {
   },
   methods: {
     ...mapActions('user', ['getPaymentMethods']),
-
-    async handleClick() {
-      const data = {
-        title: 'Белая кепка Puma Ess',
-        description:
-          'Бренд Reebok, основанный в 1895 году, использует весь свой опыт для сохранения позиции признанного законодателя уличной моды. Культовые кеды и высокие кроссовки этой марки обладают отличными рабочими характеристиками и выглядят одинаково хорошо и в повседневной жизни, и на спортивной площадке',
-      }
-      try {
-        console.log(data)
-        await this.$axios.$post('/api/v1/add', data)
-      } catch (e) {
-        console.log(e)
-      }
-    },
+    handleClick() {
+      console.log('hi')
+    }
   },
 }
 </script>
