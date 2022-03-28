@@ -46,7 +46,7 @@ export default {
 
     userCards: (vm) => vm.paymentMethods,
     newestUserCard: (vm) => vm.paymentMethods[0],
-    addNewCard: (vm) => vm.selectedCard.number === 'Новая карта',
+    addNewCard: (vm) => vm.selectedCard?.number === 'Новая карта',
   },
   mounted() {
     this.getPaymentMethods(this.user)
