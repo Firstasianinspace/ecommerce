@@ -1,4 +1,5 @@
 import { setField } from './helpers';
+import { generateRandomInt } from '@/helpers';
 
 const state = () => ({
   products: [],
@@ -24,7 +25,7 @@ const actions = {
       if (s.price) return s
       return ({
         ...s,
-        price: 100500,
+        price: generateRandomInt(2500),
         discountPrice: 0,
       })
     })

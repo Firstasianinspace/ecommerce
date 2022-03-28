@@ -1,12 +1,13 @@
 <template>
   <div class="payment-card-form">
     <div class="payment-card">
-      <div class="payment-card__column">
+      <div class="payment-card__column relative">
         <CustomInput
-          v-model="cardForm.numbers"
+          v-model="cardForm.number"
           :uniq="`it-course-user-numbers`"
           :placeholder="'Номер карты'"
-          :v="$v.cardForm.numbers"
+          :v="$v.cardForm.number"
+          :mask-type="generateCardMask"
           class="payment-card__numbers"
         />
         <CustomInput
@@ -17,6 +18,19 @@
           :v="$v.cardForm.date"
           class="payment-card__date"
         />
+        <div class="card-logo">
+          <custom-image
+            v-if="getCardType"
+            :key="getCardType"
+            :src="
+              'https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/' +
+              getCardType +
+              '.png'
+            "
+            alt=""
+            class="card-logo__typeImg"
+          />
+        </div>
       </div>
       <div class="payment-card__column">
         <div class="payment-card__cvv">
@@ -26,14 +40,16 @@
             :uniq="`it-course-user-cvv`"
             :placeholder="'CVV/CVC'"
             :v="$v.cardForm.cvv"
+            :mask-type="'####'"
             class="payment-card__cvv-input"
           />
         </div>
       </div>
       <div class="payment-card__decor">
-        <div class="payment-card__decor-front"></div>
-        <div class="payment-card__decor-back"></div>
+        <div class="payment-card__decor-front" :style="{ 'background-image': 'url(' + dynamicBackground + ')' }" />
+        <div class="payment-card__decor-back" />
       </div>
+
       <button @click="handleClick">Click</button>
     </div>
   </div>
@@ -42,6 +58,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { required, minLength, maxLength } from 'vuelidate/lib/validators'
+import { getCardTypes } from '@/helpers'
 import CustomInput from '@/components/common/CustomInput'
 
 export default {
@@ -51,7 +68,7 @@ export default {
   },
   data: () => ({
     cardForm: {
-      numbers: null,
+      number: null,
       date: null,
       name: null,
       cvv: null,
@@ -59,7 +76,7 @@ export default {
   }),
   validations: {
     cardForm: {
-      numbers: { required, maxLength: maxLength(30) },
+      number: { required, maxLength: maxLength(30) },
       date: { required, maxLength: maxLength(30) },
       name: { required, maxLength: maxLength(30) },
       cvv: { required, maxLength: minLength(3) },
@@ -68,6 +85,12 @@ export default {
   computed: {
     ...mapGetters('user', ['user']),
     // isNewCard: (vm) => vm.
+    generateCardMask: () => '#### #### #### ####',
+    getCardType: (vm) => getCardTypes(vm.cardForm.number),
+    dynamicBackground: () =>
+      'https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/)' +
+      Math.floor(Math.random() * 25 + 1) +
+      '.jpeg',
   },
   methods: {
     async handleClick() {
@@ -152,7 +175,7 @@ export default {
   }
 
   &__numbers {
-    padding: 30px 15px;
+    padding: 80px 15px 30px 15px;
   }
 
   &__date {
@@ -160,7 +183,7 @@ export default {
     flex-direction: row;
     gap: 10px;
     justify-content: flex-end;
-    padding: 45px 15px 0 0;
+    padding: 0 15px 0 0;
 
     & label {
       font-size: 14px;

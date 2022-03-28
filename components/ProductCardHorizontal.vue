@@ -30,7 +30,7 @@ export default {
     },
   },
   computed: {
-    productName: (vm) => vm.product?.item || vm.defaultName,
+    productName: (vm) => vm.product?.title || vm.defaultName,
     productImage: (vm) => vm.product?.itemImageUrl,
     productDescription: (vm) => vm.product?.description,
     regularPrice: (vm) => vm.product?.price,
@@ -60,10 +60,15 @@ export default {
 <style lang="scss" scoped>
 .product-card-horizontal {
   display: grid;
-  grid-template-columns: 5% 20% 25% 10% auto auto;
+  grid-template-columns: 2.5% 20% 27.5% 5% auto auto;
   gap: 5px;
   align-items: center;
   padding: 15px;
   border-bottom: 1px solid grey;
+
+  &__title {
+    font-size: 16px;
+    font-weight: 500;
+  }
 }
 </style>

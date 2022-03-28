@@ -10,13 +10,26 @@
       <p>Код безопасности</p>
       <CustomInput
         v-model="formData.cardCvv"
+        :mask-type="'####'"
         :uniq="`it-course-user-cvv`"
         :placeholder="'CVV/CVC'"
         :v="$v.formData.cardCvv"
         class="payment-card__cvv-input"
       />
     </div>
-    <img :src="dynamicLogo" alt="" class="existing-card__logo" />
+    <div class="card-logo">
+      <custom-image
+        v-if="getCardType"
+        :key="getCardType"
+        :src="
+          'https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/' +
+          getCardType +
+          '.png'
+        "
+        alt=""
+        class="card-logo__typeImg"
+      />
+    </div>
   </div>
 </template>
 
@@ -34,7 +47,7 @@ export default {
   },
   data: () => ({
     formData: {
-      cardCvv: 'CVV/CVC',
+      cardCvv: null,
     },
   }),
   validations: {
@@ -43,9 +56,11 @@ export default {
     },
   },
   computed: {
-    cardType: (vm) => getCardTypes(vm.card?.number),
+    getCardType: (vm) => getCardTypes(vm.card?.number),
     cardName: (vm) => vm.card?.name,
-    cardNumbers: (vm) => vm.card?.number,
+    cardNumbers: (vm) =>
+      '#'.repeat(Math.max(0, vm.card?.number.length - 4)) +
+      vm.card?.number.substr(-4),
     dynamicLogo: () => 'https://picsum.photos/64/64',
   },
 }
@@ -91,11 +106,13 @@ export default {
       }
     }
   }
+}
 
-  &__logo {
-    position: absolute;
-    top: 25px;
-    right: 25px;
-  }
+.card-logo {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  max-width: 64px;
+  min-height: 64px;
 }
 </style>

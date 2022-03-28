@@ -1,5 +1,5 @@
 <template>
-  <form class="login-form" autocomplete="it-course-login-form">
+  <form class="login-form" autocomplete="it-course-login-form" @submit.prevent="signInUser()">
     <CustomInputEmail
       v-model="formData.email"
       :label="'Email'"
@@ -19,8 +19,8 @@
     </div>
     <custom-button
       :label="'Вход'"
+      :type="'submit'"
       class="login-form__btn"
-      @click="signInUser()"
     />
     <a href="#" class="login-form__restore"> Забыли пароль? </a>
   </form>

@@ -7,9 +7,9 @@
     <input
       :id="uniq"
       v-model="text"
+      v-mask="maskType"
       :name="uniq"
       value=""
-      :type="typeProp"
       autocomplete="form-field-itcourse"
       :placeholder="placeholder"
     />
@@ -32,9 +32,9 @@ export default {
       type: String,
       default: ''
     },
-    typeProp: {
+    maskType: {
       type: String,
-      default: 'text',
+      default: () => '',
     },
     v: {
       type: Object,
@@ -51,6 +51,10 @@ export default {
     label: {
       type: String,
       default: ''
+    },
+    maxLength: {
+      type: Number,
+      default: () => null,
     }
   },
   computed: {
@@ -61,7 +65,7 @@ export default {
       set (value) {
         this.$emit('input', value)
       }
-    }
+    },
   }
 }
 </script>

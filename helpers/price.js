@@ -50,6 +50,7 @@ export const calculateDiscountPercentage = ({
 
 export const getCardTypes = (cardNumber) => {
   let re = /^4/;
+  if (cardNumber === null) return;
   if (cardNumber.match(re) != null) return "visa";
 
   re = /^(34|37)/;
@@ -65,4 +66,8 @@ export const getCardTypes = (cardNumber) => {
   if (cardNumber.match(re) != null) return 'troy'
 
   return "visa"; // default type
+}
+
+export const generateRandomInt = (maxNumber) => {
+  return Math.floor(Math.random() * maxNumber);
 }
