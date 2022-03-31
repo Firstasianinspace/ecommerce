@@ -1,98 +1,117 @@
 <template>
-  <form class="login-form" autocomplete="it-course-login-form">
-    <CustomInputEmail
-      v-model="formData.email"
-      :label="'Email'"
-      :uniq="`it-course-user-email`"
-      :placeholder="'Ваш email'"
-      :v="$v.formData.email"
+  <form class="login-form" @submit.prevent="registerUser()">
+    <custom-input
+      v-model="$v.formData.email.$model"
+      :error-model="$v.formData.email"
+      :error-message="errorMessages.email"
+      filled-icon
+      autocomplete="username"
+      type="email"
+      placeholder="Электронная почта"
+      @input="cleanupError"
     />
-    <CustomInputPassword
-      v-model="formData.password"
-      :label="'Пароль'"
-      :placeholder="'Ваш пароль'"
-      show-button
-      :v="$v.formData.password"
+    <custom-input-password
+      v-model="$v.formData.password.$model"
+      :error-model="$v.formData.password"
+      :error-message="errorMessages.password"
+      filled-icon
+      twins-left
+      placeholder="Придумайте пароль"
+      autocomplete="new-password"
+      @input="cleanupError"
     />
-    <div v-if="error" class="login-form__errors">
-      {{ error }}
-    </div>
-    <custom-button
-      :label="'Зарегистрироваться'"
-      class="login-form__btn"
-      @click="signUpUser()"
+    <custom-input-password
+      v-model="$v.formData.passwordConfirm.$model"
+      :error-model="$v.formData.passwordConfirm"
+      filled-icon
+      twins-right
+      type="password"
+      placeholder="Повторите пароль"
+      autocomplete="new-password"
+      @input="cleanupError"
     />
+    <!-- <p class="form__hint">
+      Пароль должен содержать более 8 символов, латинские буквы в верхнем и
+      нижнем регистре, а также цифры
+    </p> -->
+    <p
+      v-if="errorFromServer"
+      class="notification-message error-message"
+      v-text="errorFromServer"
+    />
+    <custom-button :label="'Зарегистрироваться'" class="login-form__btn" />
 
     <a href="#" class="login-form__restore"> Забыли пароль? </a>
   </form>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
-import { required, email, minLength, maxLength } from 'vuelidate/lib/validators'
-import { debounce } from 'lodash'
-import CustomInputEmail from '@/components/common/CustomInputEmail'
+import { mapActions } from 'vuex'
+import required from 'vuelidate/lib/validators/required'
+import email from 'vuelidate/lib/validators/email'
+import sameAs from 'vuelidate/lib/validators/sameAs'
+import { handleFirebaseAuthError } from '@/helpers'
 import CustomInputPassword from '@/components/common/CustomInputPassword'
+
+const createErrorMessages = () => ({
+  email: '',
+  password: '',
+})
 
 export default {
   name: 'RegistrationForm',
   components: {
-    CustomInputEmail,
     CustomInputPassword,
   },
   data: () => ({
     formData: {
-      email: null,
-      password: null,
+      email: '',
+      password: '',
+      passwordConfirm: '',
     },
+    errorMessages: createErrorMessages(),
+    errorFromServer: '',
   }),
   validations: {
     formData: {
       email: {
-        required,
         email,
-        maxLength: maxLength(30),
       },
       password: {
         required,
-        minLength: minLength(6),
-        maxLength: maxLength(25),
+      },
+      passwordConfirm: {
+        required,
+        passwordIsSame: sameAs('password'),
       },
     },
-  },
-  computed: {
-    ...mapGetters('user', ['error']),
-
-    email: (vm) => vm.formData.email,
-    password: (vm) => vm.formData.password,
-  },
-  watch: {
-    email(newValue, oldValue) {
-      if (newValue !== oldValue) {
-        this.debouncedWatch(newValue, oldValue)
-      }
-    },
-  },
-  created() {
-    this.debouncedWatch = debounce(() => {
-      this.$v.formData.email.$touch()
-    }, 1000)
-  },
-  beforeUnmount() {
-    this.debouncedWatch.cancel()
+    signUpValidationGroup: [
+      'formData.email',
+      'formData.password',
+      'formData.passwordConfirm',
+    ],
   },
   methods: {
     ...mapActions('user', ['signUpAction']),
 
-    signUpUser() {
-      if (this.$v.$invalid) {
-        this.$v.formData.$touch()
-      } else {
-        this.signUpAction({
+    isValid() {
+      this.$v.signUpValidationGroup.$touch()
+      return !this.$v.signUpValidationGroup.$error
+    },
+    async registerUser() {
+      if (!this.isValid()) return
+      try {
+        await this.signUpAction({
           email: this.formData.email,
           password: this.formData.password,
         })
+      } catch (error) {
+        this.errorFromServer = handleFirebaseAuthError(error.code)
       }
+    },
+    cleanupError() {
+      this.errorFromServer = ''
+      this.errorMessages = createErrorMessages()
     },
   },
 }

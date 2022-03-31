@@ -49,8 +49,6 @@
         <div class="payment-card__decor-front" :style="{ 'background-image': 'url(' + dynamicBackground + ')' }" />
         <div class="payment-card__decor-back" />
       </div>
-
-      <button @click="handleClick">Click</button>
     </div>
   </div>
 </template>
@@ -93,21 +91,6 @@ export default {
       '.jpeg',
   },
   methods: {
-    async handleClick() {
-      const data = {
-        number: '4444 4444 4444 444',
-        cvv: '777',
-        expiration_date: '2025-03-24T23:24:28.380Z',
-        name: 'Aleksandr Rabdaev',
-        user_id: this.user.createdAt,
-      }
-      try {
-        console.log(data)
-        await this.$axios.$post('/api/buy2', data)
-      } catch (e) {
-        console.log(e)
-      }
-    },
   },
 }
 </script>

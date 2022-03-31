@@ -1,13 +1,12 @@
 import { setField } from './helpers';
-import { handleFirebaseAuthError } from '@/helpers/errors';
+// import { handleFirebaseAuthError } from '@/helpers/errors';
 
 const state = () => ({
   error: null,
   errors: [],
   user: null,
-  userId: null,
   shippingData: null,
-  paymentMethods: null,
+  paymentMethods: [],
   selectedCard: null,
 });
 
@@ -16,8 +15,19 @@ const getters = {
   error: ({ error }) => error,
   shippingData: ({ shippingData }) => shippingData,
   paymentMethods: ({ paymentMethods }) => paymentMethods,
-  userId: ({ userId }) => userId,
-  selectedCard: ({ selectedCard }) => selectedCard,
+  selectedCard: ({ selectedCard, paymentMethods }) => {
+    if (paymentMethods.length > 0) {
+      return paymentMethods[0]
+    }
+    const mockCard = {
+      cvv: '777',
+      expirationDate: '2025-03-24T23:24:28.380Z',
+      id: '1',
+      name: 'Aleksandr Rabdaev',
+      number: 'Новая карта',
+    }
+    return mockCard
+  },
 };
 
 const actions = {
@@ -28,9 +38,6 @@ const actions = {
         commit('setField', { field: 'user', value: response });
         this.$router.push('/catalog');
       })
-      .catch(error => {
-        commit('setField', { field: 'error', value: handleFirebaseAuthError(error.code) });
-      });
   },
   async signInAction({ commit }, payload) {
     commit('setField', { field: 'error', value: null });
@@ -40,9 +47,6 @@ const actions = {
         commit('setField', { field: 'user', value: response.user });
         this.$router.push('/catalog');
       })
-      .catch(error => {
-        commit('setField', { field: 'error', value: handleFirebaseAuthError(error.code) })
-      });
   },
   setShippingInfo({ commit }, payload) {
     commit('setField', { field: 'shippingData', value: payload })
@@ -50,20 +54,24 @@ const actions = {
   async getPaymentMethods({ commit }, payload ) {
     const { createdAt } = payload
     // TO-DO слишком жесткая привязка, переделать
-    const data = await this.$axios.$get(`/api/get_cards_by_user_id?user_id=${createdAt}`);
-    const mockObject = {
-      cvv: '777',
-      expirationDate: '2025-03-24T23:24:28.380Z',
-      id: '1',
-      name: 'Aleksandr Rabdaev',
-      number: 'Новая карта',
-    }
-    const newArray = data.cards.concat(mockObject);
-    commit('setField', { field: 'paymentMethods', value: newArray });
+    const response = await this.$axios.$get(`/api/get_cards_by_user_id?user_id=${createdAt}`);
+    // const mockObject = {
+    //   cvv: '777',
+    //   expirationDate: '2025-03-24T23:24:28.380Z',
+    //   id: '1',
+    //   name: 'Aleksandr Rabdaev',
+    //   number: 'Новая карта',
+    // }
+    // const newArray = data.cards.concat(mockObject);
+    commit('setField', { field: 'paymentMethods', value: response });
   },  
   setPaymentMethod({ commit }, payload) {
     const newData = payload
     commit('setField', { field: 'selectedCard', value: newData })
+  },
+  async addPaymentCard({ commit }, payload) {
+    const data = await this.$axios.$post(`/api/buy2${payload}`);
+    commit('setField', { field: 'selectedCard', value: data })
   }
 };
 

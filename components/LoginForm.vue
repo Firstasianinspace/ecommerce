@@ -1,96 +1,81 @@
 <template>
-  <form class="login-form" autocomplete="it-course-login-form" @submit.prevent="signInUser()">
-    <CustomInputEmail
-      v-model="formData.email"
-      :label="'Email'"
-      :uniq="`it-course-user-email`"
-      :placeholder="'Ваш email'"
-      :v="$v.formData.email"
+  <form
+    class="login-form"
+    autocomplete="it-course-login-form"
+    @submit.prevent="loginUser()"
+  >
+    <custom-input-login
+      v-model="$v.email.$model"
+      :error-model="$v.email"
+      @input="handleInput"
     />
-    <CustomInputPassword
-      v-model="formData.password"
-      :show-button="false"
-      :label="'Пароль'"
-      :placeholder="'Ваш пароль'"
-      :v="$v.formData.password"
+    <custom-input-password
+      v-model="$v.password.$model"
+      :error-model="$v.password"
+      placeholder="Пароль"
+      autocomplete="current-password"
+      @input="handleInput"
     />
-    <div v-if="error" class="login-form__errors">
-      {{ error }}
-    </div>
-    <custom-button
-      :label="'Вход'"
-      :type="'submit'"
-      class="login-form__btn"
+    <p
+      v-if="errorFromServer"
+      class="notification-message error-message"
+      v-text="errorFromServer"
     />
+    <custom-button :label="'Вход'" :type="'submit'" class="login-form__btn" />
     <a href="#" class="login-form__restore"> Забыли пароль? </a>
   </form>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import { required, email, minLength, maxLength } from 'vuelidate/lib/validators'
-import { debounce } from 'lodash'
-import CustomInputEmail from '@/components/common/CustomInputEmail'
+import required from 'vuelidate/lib/validators/required'
+import { handleFirebaseAuthError } from '@/helpers'
+import CustomInputLogin from '@/components/common/CustomInputLogin'
 import CustomInputPassword from '@/components/common/CustomInputPassword'
 
 export default {
   name: 'LoginForm',
   components: {
-    CustomInputEmail,
+    CustomInputLogin,
     CustomInputPassword,
   },
   data: () => ({
-    formData: {
-      email: null,
-      password: null,
-    },
+    email: '',
+    password: '',
+    remember: false,
+    errorFromServer: '',
   }),
   validations: {
-    formData: {
-      email: {
-        required,
-        email,
-        maxLength: maxLength(30),
-      },
-      password: {
-        required,
-        minLength: minLength(6),
-        maxLength: maxLength(25),
-      },
+    email: {
+      required,
     },
+    password: {
+      required,
+    },
+    signInValidationGroup: ['email', 'password'],
   },
   computed: {
     ...mapGetters('user', ['error']),
-
-    email: (vm) => vm.formData.email,
-    password: (vm) => vm.formData.password,
-  },
-  watch: {
-    email(newValue, oldValue) {
-      if (newValue !== oldValue) {
-        this.debouncedWatch(newValue, oldValue)
-      }
-    },
-  },
-  created() {
-    this.debouncedWatch = debounce(() => {
-      this.$v.formData.email.$touch()
-    }, 1000)
-  },
-  beforeUnmount() {
-    this.debouncedWatch.cancel()
   },
   methods: {
     ...mapActions('user', ['signInAction']),
 
-    signInUser() {
-      if (this.$v.$invalid) {
-        this.$v.formData.$touch()
-      } else {
-        this.signInAction({
-          email: this.formData.email,
-          password: this.formData.password,
+    handleInput() {
+      this.errorFromServer = ''
+    },
+    isValid() {
+      this.$v.signInValidationGroup.$touch()
+      return !this.$v.signInValidationGroup.$error
+    },
+    async loginUser() {
+      if (!this.isValid()) return
+      try {
+        await this.signInAction({
+          email: this.email,
+          password: this.password,
         })
+      } catch (error) {
+        this.errorFromServer = handleFirebaseAuthError(error.code)
       }
     },
   },
@@ -122,7 +107,7 @@ export default {
   }
 
   &__errors {
-    padding: 0 0 0 25px;
+    padding: 0;
     margin: 0 25px 25px 0;
 
     &-item {
@@ -154,5 +139,4 @@ export default {
     }
   }
 }
-
 </style>

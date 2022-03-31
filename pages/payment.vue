@@ -31,10 +31,6 @@ export default {
     PaymentCard,
     PaymentCardAdd,
   },
-  data: () => ({
-    selectedOption: null,
-    cardExist: false,
-  }),
   computed: {
     ...mapGetters('basket', ['basketTotal']),
     ...mapGetters('user', ['user', 'paymentMethods', 'selectedCard']),
@@ -45,7 +41,7 @@ export default {
     }),
 
     userCards: (vm) => vm.paymentMethods,
-    newestUserCard: (vm) => vm.paymentMethods[0],
+    newestUserCard: (vm) => vm.paymentMethods[0] || [],
     addNewCard: (vm) => vm.selectedCard?.number === 'Новая карта',
   },
   mounted() {
