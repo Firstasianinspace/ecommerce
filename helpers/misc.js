@@ -1,4 +1,5 @@
-import { DEFAULT_PHONE_MASK } from './constants';
+import { isString } from 'lodash';
+import { DEFAULT_PHONE_MASK } from '@/constants';
 
 export const getRawPhoneNumber = (str = '', len = 10) => {
   const strippedNoStart = str.replace(/(^\+7)/, '');
@@ -31,4 +32,44 @@ export const getFormattedPhoneNumber = (
   }
   console.warn({ result });
   return result;
+};
+
+export const toPlainPhoneNumber = (phone) =>
+  phone?.toString().replace(/\D/g, '');
+
+export function toFormatedPhoneNumber(rawPhone) {
+  if (!rawPhone) return rawPhone;
+
+  let phone = toPlainPhoneNumber(rawPhone);
+
+  switch (phone.length) {
+    // ##-###-####
+    case 8:
+    case 9:
+    case 10:
+      phone = phone.replace(/(\d{2})(\d{3})(\d{1,4})?/, '$1-$2-$3');
+      break;
+
+    // ### ###-##-##
+    case 11:
+      phone = phone.replace(
+        /(\d{1})(\d{3})(\d{3})(\d{2})(\d{2})/,
+        '$1 ($2) $3-$4-$5',
+      );
+      break;
+
+    // ### ###-###-#########
+    default:
+      phone = phone.replace(/(\d{3})(\d{3})(\d{3})(\d+)?/, '$1 $2-$3-$4');
+  }
+
+  return `+${phone}`;
+}
+
+export const replaceMaskSymbols = (str) => {
+  if (!str || !isString(str)) {
+    return '';
+  }
+
+  return str.replace(/[()\-+_ ]/gi, '');
 };

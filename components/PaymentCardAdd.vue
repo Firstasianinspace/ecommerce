@@ -2,12 +2,11 @@
   <div class="payment-card-form">
     <div class="payment-card">
       <div class="payment-card__column relative">
-        <CustomInput
+        <CustomInputCard
           v-model="cardForm.number"
           :uniq="`it-course-user-numbers`"
           :placeholder="'Номер карты'"
           :v="$v.cardForm.number"
-          :mask-type="generateCardMask"
           class="payment-card__numbers"
         />
         <CustomInput
@@ -35,18 +34,21 @@
       <div class="payment-card__column">
         <div class="payment-card__cvv">
           <p>Код безопасности</p>
-          <CustomInput
+          <CustomInputCard
             v-model="cardForm.cvv"
             :uniq="`it-course-user-cvv`"
             :placeholder="'CVV/CVC'"
             :v="$v.cardForm.cvv"
-            :mask-type="'####'"
+            is-cvv
             class="payment-card__cvv-input"
           />
         </div>
       </div>
       <div class="payment-card__decor">
-        <div class="payment-card__decor-front" :style="{ 'background-image': 'url(' + dynamicBackground + ')' }" />
+        <div
+          class="payment-card__decor-front"
+          :style="{ 'background-image': 'url(' + dynamicBackground + ')' }"
+        />
         <div class="payment-card__decor-back" />
       </div>
     </div>
@@ -57,12 +59,12 @@
 import { mapGetters } from 'vuex'
 import { required, minLength, maxLength } from 'vuelidate/lib/validators'
 import { getCardTypes } from '@/helpers'
-import CustomInput from '@/components/common/CustomInput'
+import CustomInputCard from '@/components/common/CustomInputCard'
 
 export default {
   name: 'PaymentCardAdd',
   components: {
-    CustomInput,
+    CustomInputCard,
   },
   data: () => ({
     cardForm: {
@@ -80,6 +82,15 @@ export default {
       cvv: { required, maxLength: minLength(3) },
     },
   },
+  // validations: {
+  //   email: {
+  //     required,
+  //   },
+  //   password: {
+  //     required,
+  //   },
+  //   signInValidationGroup: ['email', 'password'],
+  // },
   computed: {
     ...mapGetters('user', ['user']),
     // isNewCard: (vm) => vm.
@@ -90,8 +101,7 @@ export default {
       Math.floor(Math.random() * 25 + 1) +
       '.jpeg',
   },
-  methods: {
-  },
+  methods: {},
 }
 </script>
 
@@ -151,14 +161,14 @@ export default {
   height: 232px;
 
   & .form-field {
-    & input {
+    &__input {
       border: none;
       border-bottom: 1px solid lightblue;
     }
   }
 
   &__numbers {
-    padding: 80px 15px 30px 15px;
+    padding: 80px 15px 30px 15px !important;
   }
 
   &__date {

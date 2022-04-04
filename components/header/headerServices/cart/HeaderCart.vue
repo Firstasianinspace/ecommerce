@@ -42,7 +42,7 @@ export default {
     HeaderCartList,
   },
   data: () => ({
-    showCart: true,
+    showCart: false,
   }),
   computed: {
     ...mapGetters('basket', ['basket', 'basketCount', 'basketTotal']),

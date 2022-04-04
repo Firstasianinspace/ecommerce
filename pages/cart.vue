@@ -8,16 +8,6 @@
           :product="product"
           @click:remove="removeFromBasket(index)"
         />
-        <!-- <SfSteps v-model="active" :steps="steps" can-go-back>
-          <SfStep v-for="(step, key) in steps" :key="key" :name="step">
-            <component :is="dynamicComponent" />
-          </SfStep>
-        </SfSteps>
-        <custom-button
-          :label="'Следующий шаг'"
-          :class="dynamicClass"
-          @click="nextStep()"
-        /> -->
       </div>
       <div class="checkout-page-content__right">
         <OrderSummary
@@ -29,22 +19,13 @@
         />
       </div>
     </div>
-    <CreditCardModal />
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-// import SfSteps from '@/components/SfSteps.vue'
 import OrderSummary from '@/components/OrderSummary'
-import ProductCardHorizontal from '@/components/ProductCardHorizontal'
-// import SfStep from '@/components/SfStep.vue'
-import CreditCardModal from '@/components/cardForm/CreditCardModal';
-
-const details = () => import('@/components/details.vue');
-const Shipping = () => import('@/components/Shipping.vue');
-const OrderPayment = () => import('@/components/OrderPayment.vue');
-const OrderReview = () => import('@/components/OrderReview.vue');
+import ProductCardHorizontal from '@/components/product/ProductCardHorizontal'
 
 export default {
   name: 'CheckoutPage',
@@ -53,7 +34,6 @@ export default {
     // SfStep,
     OrderSummary,
     ProductCardHorizontal,
-    CreditCardModal,
   },
   middleware: 'emptyCart',
   data: () => ({
@@ -67,22 +47,6 @@ export default {
       'basketTotal',
       'basketCount',
     ]),
-    dynamicClass: (vm) => vm.active === 3 ? 'btn-checkout-buy' : 'btn-checkout-next',
-    dynamicComponent() {
-      if (this.active === 0) {
-        return details
-      }
-      if (this.active === 1) {
-        return Shipping
-      }
-      if (this.active === 2) {
-        return OrderPayment
-      }
-      if (this.active === 3) {
-        return OrderReview
-      }
-      return null
-    },
   },
   methods: {
     ...mapActions('basket', ['removeFromBasket']),
@@ -91,13 +55,6 @@ export default {
       const products = [...this.products]
       this.products = products.filter((element) => element.itemId !== product.itemId)
     },
-    nextStep() {
-      if (this.active === 3) {
-        return null
-      } else {
-        this.active +=1
-      }
-    }
   },
 }
 </script>

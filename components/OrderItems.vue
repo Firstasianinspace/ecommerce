@@ -9,7 +9,7 @@
       :key="product.itemCode"
       class="order-list__item"
     >
-    <span>{{ product.name }}</span>
+    <span>{{ product.title }}</span>
     <span>{{ product.price | formatPrice  }} руб.</span>
     </li>
     <li class="order-list__item">

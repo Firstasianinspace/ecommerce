@@ -4,4 +4,5 @@
 export * from './price';
 export * from './string';
 export * from './errors';
+export * from './misc';
 // export * from './spinner';

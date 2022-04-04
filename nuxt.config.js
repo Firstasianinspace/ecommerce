@@ -49,7 +49,6 @@ export default {
       src: '@/plugins/vue-awesome-swiper',
       mode: 'client'
     },
-    // '@/plugins/axios.js'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -67,7 +66,6 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/firebase',
-    '@storefront-ui/nuxt',
     '@nuxtjs/proxy',
   ],
 

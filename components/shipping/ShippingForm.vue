@@ -20,7 +20,6 @@
       </div>
       <div class="shipping-form__row-single">
         <div class="form-field">
-          <label class="form-label">Адрес</label>
           <vue-dadata
             token="7cfe8e0d350eddb5b9c550019194bcabb315b1e4"
             placeholder="Адрес"
@@ -29,13 +28,9 @@
         </div>
       </div>
       <div class="shipping-form__row-single">
-        <CustomInput
+        <CustomInputPhone
           v-model="shippingData.phone"
-          :uniq="`phone-field-it-course`"
-          :label="'Номер телефона'"
-          :placeholder="'Номер телефона'"
-          :type-prop="`phone`"
-          :v="$v.shippingData.phone"
+          :error-model="$v.shippingData.phone"
         />
       </div>
       <!-- <div class="shipping-form__row">
@@ -62,34 +57,75 @@
 import { mapActions } from 'vuex'
 import { required, maxLength } from 'vuelidate/lib/validators'
 import VueDadata from 'vue-dadata'
-import CustomInput from '@/components/common/CustomInput'
+import { RAW_PHONE_LENGTH } from '@/constants'
+import CustomInputPhone from '@/components/common/CustomInputPhone'
 
 export default {
   name: 'ShippingForm',
   components: {
-    CustomInput,
+    CustomInputPhone,
     VueDadata,
   },
   data: () => ({
     shippingData: {
-      firstName: null,
-      lastName: null,
-      address: null,
-      phone: null,
-      additionalInfo: null,
-      shippingMethod: null,
+      firstName: '',
+      lastName: '',
+      address: '',
+      phone: '',
+      additionalInfo: '',
       saveInfo: false,
     },
   }),
   validations: {
     shippingData: {
-      firstName: { required, maxLength: maxLength(30) },
-      lastName: { required, maxLength: maxLength(30) },
-      streetName: { required, maxLength: maxLength(30) },
-      city: { required, maxLength: maxLength(30) },
-      phone: { required, maxLength: maxLength(30) },
-      additionalInfo: { maxLength: maxLength(50) },
-      shippingMethod: { required, maxLength: maxLength(30) },
+      firstName: {
+        required
+      },
+      lastName: {
+        required
+      },
+      address: {
+        required
+      },
+      phone: {
+        required,
+        phoneLength: (v) => v ? v.replace(/\D/g, '').length === RAW_PHONE_LENGTH : false,
+      },
+      additionalInfo: {
+        maxLength: maxLength(50)
+      },
+    },
+    formShippingValidationGroup: [
+      'shippingData.fistName',
+      'shippingData.lastName',
+      'shippingData.address',
+      'shippingData.phone'
+    ],
+  },
+  // validations: {
+  //   phone: {
+  //     phoneLength: (v) =>
+  //       v ? v.replace(/\D/g, '').length === RAW_PHONE_LENGTH : false,
+  //   },
+  //   name: {
+  //     required,
+  //   },
+  //   email: {
+  //     email,
+  //   },
+  //   code: {
+  //     required,
+  //   },
+  //   pharmacistName: {
+  //     required,
+  //   },
+  // },
+  computed: {
+    isFormValid() {
+      return !this.$v.$invalid;
+    },
+    isPhoneValid() {
+      return !this.$v.phone.$invalid;
     },
   },
   methods: {
@@ -132,6 +168,7 @@ export default {
 .vue-dadata__input {
   border: 1px solid #000;
   border-radius: 0 !important;
+  height: auto;
   &:focus {
     box-shadow: none !important;
     border-color: #000;

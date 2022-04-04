@@ -11,7 +11,8 @@
 
 <script>
 import { mapActions } from 'vuex'
-import ProductCard from '@/components/ProductCard'
+import ProductCard from '@/components/product/ProductCard'
+
 export default {
   name: 'CatalogGrid',
   components: {

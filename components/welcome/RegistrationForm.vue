@@ -118,4 +118,60 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.login-form {
+  display: flex;
+  flex-direction: column;
+  margin: 0 80px;
+  &__btn {
+    padding: 12px 0;
+    background: #222;
+    color: #fff;
+    border: none;
+    text-transform: uppercase;
+    font-size: 16px;
+    cursor: pointer;
+    &:hover {
+      background: #767676;
+    }
+  }
+  &__restore {
+    padding: 35px 0;
+    text-align: center;
+    font-size: 14px;
+    color: #767676;
+  }
+
+  &__errors {
+    padding: 0;
+    margin: 0 25px 25px 0;
+
+    &-item {
+      font-size: 14px;
+    }
+  }
+}
+/*
+** Input field
+*/
+.form-field {
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 20px 0;
+  & label {
+    padding: 0 0 10px 0;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #767676;
+  }
+
+  & input {
+    padding: 12px 10px;
+  }
+
+  &.hasError {
+    & input {
+      border: 1px solid red;
+    }
+  }
+}
 </style>

@@ -19,7 +19,7 @@
 import { mask } from 'vue-the-mask';
 import CustomInputScope from './CustomInputScope.vue';
 import { getRawPhoneNumber } from '@/helpers';
-import { DEFAULT_PHONE_MASK } from '@/helpers/constants';
+import { DEFAULT_PHONE_MASK } from '@/constants';
 
 export default {
   components: {

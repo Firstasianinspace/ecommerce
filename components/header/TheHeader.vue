@@ -5,20 +5,17 @@
         class="header-logo"
         to="/catalog"
       > {{ storeName }} </nuxt-link>
-      <HeaderSearch />
       <HeaderServices />
     </div>
   </header>
 </template>
 
 <script>
-import HeaderSearch from '@/components/header/HeaderSearch'
 import HeaderServices from '@/components/header/headerServices/HeaderServices'
 
 export default {
   name: 'TheHeader',
   components: {
-    HeaderSearch,
     HeaderServices,
   },
   computed: {

@@ -24,8 +24,8 @@
 </template>
 
 <script>
-import LoginForm from '@/components/LoginForm'
-import RegistrationForm from '@/components/RegistrationForm'
+import LoginForm from '@/components/welcome/LoginForm'
+import RegistrationForm from '@/components/welcome/RegistrationForm'
 
 export default {
   name: 'IndexPage',
@@ -34,7 +34,7 @@ export default {
     RegistrationForm,
   },
   layout: 'login',
-    middleware: 'authenticated',
+  middleware: 'authenticated',
   data: () => ({
     selectedIndex: 0,
     isLogin: true,
