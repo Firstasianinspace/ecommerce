@@ -15,19 +15,7 @@ const getters = {
   error: ({ error }) => error,
   shippingData: ({ shippingData }) => shippingData,
   paymentMethods: ({ paymentMethods }) => paymentMethods,
-  selectedCard: ({ selectedCard, paymentMethods }) => {
-    if (paymentMethods.length > 0) {
-      return paymentMethods[0]
-    }
-    const mockCard = {
-      cvv: '777',
-      expirationDate: '2025-03-24T23:24:28.380Z',
-      id: '1',
-      name: 'Aleksandr Rabdaev',
-      number: 'Новая карта',
-    }
-    return mockCard
-  },
+  selectedCard: ({ selectedCard }) => selectedCard
 };
 
 const actions = {
@@ -55,15 +43,15 @@ const actions = {
     const { createdAt } = payload
     // TO-DO слишком жесткая привязка, переделать
     const response = await this.$axios.$get(`/api/get_cards_by_user_id?user_id=${createdAt}`);
-    // const mockObject = {
-    //   cvv: '777',
-    //   expirationDate: '2025-03-24T23:24:28.380Z',
-    //   id: '1',
-    //   name: 'Aleksandr Rabdaev',
-    //   number: 'Новая карта',
-    // }
-    // const newArray = data.cards.concat(mockObject);
-    commit('setField', { field: 'paymentMethods', value: response });
+    const mockObject = {
+      cvv: '777',
+      expirationDate: '2025-03-24T23:24:28.380Z',
+      id: '1',
+      name: 'Aleksandr Rabdaev',
+      number: 'Новая карта',
+    }
+    const newArray = response.cards.concat(mockObject);
+    commit('setField', { field: 'paymentMethods', value: newArray });
   },  
   setPaymentMethod({ commit }, payload) {
     const newData = payload

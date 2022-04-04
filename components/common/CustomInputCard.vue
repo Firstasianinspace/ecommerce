@@ -6,6 +6,8 @@
         v-bind="input.attrs"
         :placeholder="placeholder"
         :class="input.className"
+        v-on="input.listeners"
+        @focusout="handleCardFocusout"
       />
     </template>
   </CustomInputScope>
@@ -14,7 +16,11 @@
 <script>
 import { mask } from 'vue-the-mask'
 import CustomInputScope from './CustomInputScope.vue'
-import { DEFAULT_CARD_NUMBER_MASK, DEFAULT_CARD_CVV_MASK } from '@/constants'
+import {
+  DEFAULT_CARD_NUMBER_MASK,
+  DEFAULT_CARD_CVV_MASK,
+  DEFAULT_CARD_DATE_MASK
+} from '@/constants'
 
 export default {
   name: 'CustomInputCard',
@@ -23,28 +29,39 @@ export default {
   },
   directives: { mask },
   props: {
-    isCvv: {
-      type: Boolean,
-      default: false,
+    maskType: {
+      type: String,
+      default: 'card-number',
     },
   },
   data: () => ({
     prevValue: '',
   }),
   computed: {
-    typeOfMask: (vm) =>
-      vm.isCvv ? DEFAULT_CARD_CVV_MASK : DEFAULT_CARD_NUMBER_MASK,
+    typeOfMask() {
+      if (this.maskType === 'card-number') {
+        return DEFAULT_CARD_NUMBER_MASK
+      }
+      if (this.maskType === 'card-cvv') {
+        return DEFAULT_CARD_CVV_MASK
+      } 
+      if (this.maskType === 'card-date') {
+        return DEFAULT_CARD_DATE_MASK
+      } 
+      return '###'
+    },
     placeholder: (vm) => vm.$attrs.placeholder,
     bindProps: (vm) => ({
       ...vm.$props,
       ...vm.$attrs,
-      type: 'tel',
+      type: 'text',
       filledIcon: vm.isFilled,
     }),
   },
   methods: {
     handleCardFocusout() {
       const { value } = this.$attrs
+      console.log(value)
       this.$emit('input', value)
     },
   },

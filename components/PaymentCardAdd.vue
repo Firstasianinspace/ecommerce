@@ -1,23 +1,23 @@
 <template>
-  <div class="payment-card-form">
+  <form class="payment-card-form">
     <div class="payment-card">
       <div class="payment-card__column relative">
         <CustomInputCard
-          v-model="cardForm.number"
-          :uniq="`it-course-user-numbers`"
+          v-model="$v.cardForm.number.$model"
+          :error-model="$v.cardForm.number"
+          :mask-type="'card-number'"
           :placeholder="'Номер карты'"
-          :v="$v.cardForm.number"
           class="payment-card__numbers"
         />
-        <CustomInput
-          v-model="cardForm.date"
-          :uniq="`it-course-user-date`"
+        <CustomInputCard
+          v-model="$v.cardForm.date.$model"
+          :error-model="$v.cardForm.date"
+          :mask-type="'card-date'"
           :placeholder="'ММ / ГГ'"
           :label="'Действует до'"
-          :v="$v.cardForm.date"
           class="payment-card__date"
         />
-        <div class="card-logo">
+        <!-- <div class="card-logo">
           <custom-image
             v-if="getCardType"
             :key="getCardType"
@@ -29,17 +29,16 @@
             alt=""
             class="card-logo__typeImg"
           />
-        </div>
+        </div> -->
       </div>
       <div class="payment-card__column">
         <div class="payment-card__cvv">
           <p>Код безопасности</p>
           <CustomInputCard
-            v-model="cardForm.cvv"
-            :uniq="`it-course-user-cvv`"
+            v-model="$v.cardForm.cvv.$model"
+            :error-model="$v.cardForm.cvv"
+            :mask-type="'card-cvv'"
             :placeholder="'CVV/CVC'"
-            :v="$v.cardForm.cvv"
-            is-cvv
             class="payment-card__cvv-input"
           />
         </div>
@@ -47,19 +46,25 @@
       <div class="payment-card__decor">
         <div
           class="payment-card__decor-front"
-          :style="{ 'background-image': 'url(' + dynamicBackground + ')' }"
         />
         <div class="payment-card__decor-back" />
       </div>
     </div>
-  </div>
+  </form>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 import { required, minLength, maxLength } from 'vuelidate/lib/validators'
-import { getCardTypes } from '@/helpers'
+// import { getCardTypes } from '@/helpers'
 import CustomInputCard from '@/components/common/CustomInputCard'
+
+const dateValidations = (date) => {
+  const month = date.slice(0, 2)
+  const year = date.slice(-2)
+  console.log(year);
+  return month
+}
 
 export default {
   name: 'PaymentCardAdd',
@@ -68,40 +73,53 @@ export default {
   },
   data: () => ({
     cardForm: {
-      number: null,
-      date: null,
-      name: null,
-      cvv: null,
+      number: '',
+      date: '',
+      name: '',
+      cvv: '',
     },
   }),
   validations: {
     cardForm: {
-      number: { required, maxLength: maxLength(30) },
-      date: { required, maxLength: maxLength(30) },
-      name: { required, maxLength: maxLength(30) },
-      cvv: { required, maxLength: minLength(3) },
+      number: {
+        required,
+        maxLength: maxLength(30)
+      },
+      date: {
+        required,
+        maxLength: maxLength(30)
+      },
+      name: {
+        required,
+        maxLength: maxLength(30)
+      },
+      cvv: {
+        required,
+        maxLength: minLength(3)
+      },
     },
+    creditCardValidationGroup: [
+      'cardForm.number',
+      'cardForm.date',
+      'cardForm.cvv',
+    ],
   },
-  // validations: {
-  //   email: {
-  //     required,
-  //   },
-  //   password: {
-  //     required,
-  //   },
-  //   signInValidationGroup: ['email', 'password'],
-  // },
   computed: {
     ...mapGetters('user', ['user']),
+
+    minCardMonth: () => new Date().getMonth(),
+    minCardYear: () => new Date().getFullYear(),
     // isNewCard: (vm) => vm.
     generateCardMask: () => '#### #### #### ####',
-    getCardType: (vm) => getCardTypes(vm.cardForm.number),
-    dynamicBackground: () =>
-      'https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/)' +
-      Math.floor(Math.random() * 25 + 1) +
-      '.jpeg',
+    maxMonth: (vm) => dateValidations(vm.cardForm.date)
+    // getCardType: (vm) => getCardTypes(vm.cardForm.number),
   },
-  methods: {},
+  methods: {
+    isValid() {
+      this.$v.creditCardValidationGroup.$touch()
+      return !this.$v.creditCardValidationGroup.$error
+    },
+  },
 }
 </script>
 

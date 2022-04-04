@@ -40,8 +40,8 @@ export default {
       sumTotal: vm.basketTotal,
     }),
 
-    userCards: (vm) => vm.paymentMethods.cards,
-    newestUserCard: (vm) => vm.paymentMethods[0] || {},
+    userCards: (vm) => vm.paymentMethods,
+    newestUserCard: (vm) => vm.selectedCard,
     addNewCard: (vm) => vm.selectedCard?.number === 'Новая карта',
   },
   mounted() {

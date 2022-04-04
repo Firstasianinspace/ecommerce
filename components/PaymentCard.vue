@@ -1,23 +1,22 @@
 <template>
   <div class="existing-card">
-    <h6 class="existing-card__title">
+    <!-- <h6 class="existing-card__title">
       {{ cardType }}
-    </h6>
+    </h6> -->
     <p class="existing-card__numbers">
       {{ cardNumbers }}
     </p>
     <div class="payment-card__cvv">
       <p>Код безопасности</p>
-      <CustomInput
-        v-model="formData.cardCvv"
-        :mask-type="'####'"
-        :uniq="`it-course-user-cvv`"
+      <CustomInputCard
+        v-model="$v.cardForm.cvv.$model"
+        :error-model="$v.cardForm.cvv"
+        :mask-type="'card-cvv'"
         :placeholder="'CVV/CVC'"
-        :v="$v.formData.cardCvv"
         class="payment-card__cvv-input"
       />
     </div>
-    <div class="card-logo">
+    <!-- <div class="card-logo">
       <custom-image
         v-if="getCardType"
         :key="getCardType"
@@ -29,16 +28,20 @@
         alt=""
         class="card-logo__typeImg"
       />
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
-import { required, minLength, maxLength } from 'vuelidate/lib/validators'
+import { required, minLength } from 'vuelidate/lib/validators'
 import { getCardTypes } from '@/helpers'
+import CustomInputCard from '@/components/common/CustomInputCard'
 
 export default {
   name: 'PaymentCard',
+  components: {
+    CustomInputCard
+  },
   props: {
     card: {
       type: Object,
@@ -46,17 +49,23 @@ export default {
     },
   },
   data: () => ({
-    formData: {
-      cardCvv: null,
+    cardForm: {
+      cvv: null,
     },
   }),
   validations: {
-    formData: {
-      cardCvv: { required, minLength: minLength(3), maxLength: maxLength(3) },
+    cardForm: {
+      cvv: {
+        required,
+        maxLength: minLength(3)
+      },
     },
+    creditCardValidationGroup: [
+      'cardForm.cvv',
+    ],
   },
   computed: {
-    getCardType: (vm) => getCardTypes(vm.card?.number),
+    getCardType: (vm) => getCardTypes(vm.card.number),
     cardName: (vm) => vm.card?.name,
     cardNumbers: (vm) =>
       '#'.repeat(Math.max(0, vm.card?.number.length - 4)) +
