@@ -40,7 +40,7 @@ import CustomInputCard from '@/components/common/CustomInputCard'
 export default {
   name: 'PaymentCard',
   components: {
-    CustomInputCard
+    CustomInputCard,
   },
   props: {
     card: {
@@ -57,12 +57,10 @@ export default {
     cardForm: {
       cvv: {
         required,
-        maxLength: minLength(3)
+        maxLength: minLength(3),
       },
     },
-    creditCardValidationGroup: [
-      'cardForm.cvv',
-    ],
+    creditCardValidationGroup: ['cardForm.cvv'],
   },
   computed: {
     getCardType: (vm) => getCardTypes(vm.card.number),
@@ -86,6 +84,7 @@ export default {
   border: 1px solid #e0e0e0;
   border-radius: 6px;
   position: relative;
+  z-index: -1;
   // existing-card__numbers
   & h6 {
     font-size: 22px;

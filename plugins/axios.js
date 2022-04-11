@@ -8,8 +8,6 @@ export default function ({
     config.headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      'Access-Control-Allow-Credentials': true,
-      'credentials': false
     }
   })
 

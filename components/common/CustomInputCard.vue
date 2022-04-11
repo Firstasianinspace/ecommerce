@@ -55,13 +55,11 @@ export default {
       ...vm.$props,
       ...vm.$attrs,
       type: 'text',
-      filledIcon: vm.isFilled,
     }),
   },
   methods: {
     handleCardFocusout() {
       const { value } = this.$attrs
-      console.log(value)
       this.$emit('input', value)
     },
   },

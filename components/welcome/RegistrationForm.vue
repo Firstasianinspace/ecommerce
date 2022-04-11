@@ -1,5 +1,5 @@
 <template>
-  <form class="login-form" @submit.prevent="registerUser()">
+  <form class="login-form">
     <custom-input
       v-model="$v.formData.email.$model"
       :error-model="$v.formData.email"
@@ -39,8 +39,7 @@
       class="notification-message error-message"
       v-text="errorFromServer"
     />
-    <custom-button :label="'Зарегистрироваться'" class="login-form__btn" />
-
+    <custom-button :label="'Зарегистрироваться'" class="login-form__btn" @click="registerUser()" />
     <a href="#" class="login-form__restore"> Забыли пароль? </a>
   </form>
 </template>
@@ -92,7 +91,7 @@ export default {
     ],
   },
   methods: {
-    ...mapActions('user', ['signUpAction']),
+    ...mapActions('user', ['signUpAction', 'setUserUid']),
 
     isValid() {
       this.$v.signUpValidationGroup.$touch()
@@ -105,6 +104,7 @@ export default {
           email: this.formData.email,
           password: this.formData.password,
         })
+        this.setUserUid()
       } catch (error) {
         this.errorFromServer = handleFirebaseAuthError(error.code)
       }

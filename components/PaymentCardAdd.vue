@@ -1,5 +1,5 @@
 <template>
-  <form class="payment-card-form">
+  <div class="payment-card-form">
     <div class="payment-card">
       <div class="payment-card__column relative">
         <CustomInputCard
@@ -44,13 +44,11 @@
         </div>
       </div>
       <div class="payment-card__decor">
-        <div
-          class="payment-card__decor-front"
-        />
+        <div class="payment-card__decor-front" />
         <div class="payment-card__decor-back" />
       </div>
     </div>
-  </form>
+  </div>
 </template>
 
 <script>
@@ -62,7 +60,7 @@ import CustomInputCard from '@/components/common/CustomInputCard'
 const dateValidations = (date) => {
   const month = date.slice(0, 2)
   const year = date.slice(-2)
-  console.log(year);
+  console.log(year)
   return month
 }
 
@@ -83,19 +81,19 @@ export default {
     cardForm: {
       number: {
         required,
-        maxLength: maxLength(30)
+        maxLength: maxLength(30),
       },
       date: {
         required,
-        maxLength: maxLength(30)
+        maxLength: maxLength(30),
       },
       name: {
         required,
-        maxLength: maxLength(30)
+        maxLength: maxLength(30),
       },
       cvv: {
         required,
-        maxLength: minLength(3)
+        maxLength: minLength(3),
       },
     },
     creditCardValidationGroup: [
@@ -111,7 +109,7 @@ export default {
     minCardYear: () => new Date().getFullYear(),
     // isNewCard: (vm) => vm.
     generateCardMask: () => '#### #### #### ####',
-    maxMonth: (vm) => dateValidations(vm.cardForm.date)
+    maxMonth: (vm) => dateValidations(vm.cardForm.date),
     // getCardType: (vm) => getCardTypes(vm.cardForm.number),
   },
   methods: {

@@ -25,6 +25,9 @@ const actions = {
   },
   removeFromBasket({ commit }, index) {
     commit('removeFromBasket', index)
+  },
+  async clearBasket({ commit }) {
+    await commit('setField', { field: 'basket', value: [] })
   }
 };
 
@@ -41,7 +44,7 @@ const mutations = {
   },
   removeFromBasket(state, index) {
     state.basket.splice(index, 1)
-  }
+  },
 };
 
 export default {

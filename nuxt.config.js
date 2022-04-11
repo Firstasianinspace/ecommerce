@@ -43,7 +43,10 @@ export default {
   plugins: [
     '@/plugins/global.js',
     '@/plugins/vuelidate.js',
-    '@/plugins/persistedState.client.js',
+    {
+      src: '@/plugins/persistedState.client.js',
+      mode: 'client'
+    },
     '@/plugins/filters.js',
     {
       src: '@/plugins/vue-awesome-swiper',
@@ -66,7 +69,7 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/firebase',
-    '@nuxtjs/proxy',
+    // '@nuxtjs/proxy',
   ],
 
   fontawesome: {
@@ -75,22 +78,20 @@ export default {
       regular: true,
     }
   },
-  // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    // baseURL: 'http://193.168.48.193:8081/v1',
-    proxy: true,
+    baseURL: 'http://193.168.48.193:8081/v1',
+    // proxy: true,
     //   proxyHeadersIgnore: ['accept', 'host', 'x-forwarded-host', 'x-forwarded-port', 'x-forwarded-proto', 'cf-ray', 'cf-connecting-ip', 'content-length', 'content-md5', 'content-type'],
     // },
   },
-  proxy: {
-    '/api/': {
-      target: 'http://193.168.48.193:8081/v1',
-      pathRewrite: {
-        '^/api': '/'
-      },
-    }
-  },
+  // proxy: {
+  //   '/api/': {
+  //     target: 'http://193.168.48.193:8081/v1',
+  //     pathRewrite: {
+  //       '^/api': '/'
+  //     },
+  //   }
+  // },
   firebase: {
     config: {
       apiKey: 'AIzaSyDgvdQ8otbAiXAfzUzWTOAZD3FrfeAzejA',
@@ -102,7 +103,8 @@ export default {
       measurementId: 'G-1C30EJFRKJ'
     },
     services: {
-      auth: true // Just as example. Can be any other service.
+      auth: true,
+      firestore: true,
     }
   },
   // Build Configuration: https://go.nuxtjs.dev/config-build

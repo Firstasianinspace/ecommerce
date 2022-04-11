@@ -1,8 +1,7 @@
 <template>
-  <form
+  <div
     class="login-form"
     autocomplete="it-course-login-form"
-    @submit.prevent="loginUser()"
   >
     <custom-input-login
       v-model="$v.email.$model"
@@ -21,9 +20,9 @@
       class="notification-message error-message"
       v-text="errorFromServer"
     />
-    <custom-button :label="'Вход'" :type="'submit'" class="login-form__btn" />
+    <custom-button :label="'Вход'" :type="'submit'" class="login-form__btn" @click="loginUser()"/>
     <a href="#" class="login-form__restore"> Забыли пароль? </a>
-  </form>
+  </div>
 </template>
 
 <script>
@@ -58,7 +57,7 @@ export default {
     ...mapGetters('user', ['error']),
   },
   methods: {
-    ...mapActions('user', ['signInAction']),
+    ...mapActions('auth', ['signInAction']),
 
     handleInput() {
       this.errorFromServer = ''
@@ -68,10 +67,10 @@ export default {
       return !this.$v.signInValidationGroup.$error
     },
     async loginUser() {
-      if (!this.isValid()) return
+      // if (!this.isValid()) return
       try {
         await this.signInAction({
-          email: this.email,
+          username: this.email,
           password: this.password,
         })
       } catch (error) {

@@ -42,15 +42,21 @@ export default {
 
     userCards: (vm) => vm.paymentMethods,
     newestUserCard: (vm) => vm.selectedCard,
-    addNewCard: (vm) => vm.selectedCard?.number === 'Новая карта',
+    addNewCard: (vm) => vm.paymentMethods[0]?.number === 'Новая карта',
   },
   mounted() {
-    this.getPaymentMethods(this.user)
+    this.getPaymentMethods()
   },
   methods: {
-    ...mapActions('user', ['getPaymentMethods']),
-    handleClick() {
-      console.log('hi')
+    ...mapActions('user', ['getPaymentMethods', 'buyItems']),
+
+    async handleClick() {
+      try {
+        await this.buyItems()
+        this.$router.push('/success')
+      } catch (e) {
+        console.log(e)
+      }
     }
   },
 }
@@ -68,6 +74,7 @@ export default {
   }
   &__button {
     margin: 30px 0 0 0;
+    z-index: 1000;
   }
 }
 </style>

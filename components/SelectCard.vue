@@ -56,9 +56,9 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('user', ['selectedCard']),
+    ...mapGetters('user', ['paymentMethods']),
 
-    selectedCardName: (vm) => vm.selectedCard?.number,
+    selectedCardName: (vm) => vm.paymentMethods[0].number,
     className() {
       const { isOpen, isFocused } = this
       const classNames = ['b-field b-field--select']

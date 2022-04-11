@@ -5,7 +5,11 @@ const state = () => ({
   error: null,
   errors: [],
   user: null,
-  shippingData: null,
+  userUid: null,
+  name: null,
+  surname: null,
+  phone: null,
+  address: null,
   paymentMethods: [],
   selectedCard: null,
 });
@@ -15,15 +19,19 @@ const getters = {
   error: ({ error }) => error,
   shippingData: ({ shippingData }) => shippingData,
   paymentMethods: ({ paymentMethods }) => paymentMethods,
-  selectedCard: ({ selectedCard }) => selectedCard
-};
+  selectedCard: ({ selectedCard }) => selectedCard,
+  basket(state, getters, rootState, rootGetters) {
+    return rootGetters[`basket/basket`]
+  },
+  userUid: ({ userUid }) => userUid,
+}
 
 const actions = {
-  async signUpAction({ commit }, payload) {
+  async signUpAction({ commit, dispatch }, payload) {
     await this.$fire
       .auth.createUserWithEmailAndPassword(payload.email, payload.password)
       .then(response => {
-        commit('setField', { field: 'user', value: response });
+        commit('setField', { field: 'user', value: response.user });
         this.$router.push('/catalog');
       })
   },
@@ -36,13 +44,55 @@ const actions = {
         this.$router.push('/catalog');
       })
   },
-  setShippingInfo({ commit }, payload) {
-    commit('setField', { field: 'shippingData', value: payload })
+  async setUserUid({ commit, getters }) {
+    const { user } = getters
+    const ref = this.$fire.firestore.collection('users').doc(user.uid)
+    try {
+      await ref.set({
+        user_id: Date.now()
+      })
+    } catch (e) {
+      console.log(e)
+    }
   },
-  async getPaymentMethods({ commit }, payload ) {
-    const { createdAt } = payload
+  async getUserUid({ commit, getters }) {
+    const { user } = getters
+    const ref = await this.$fire.firestore.collection('users').doc(user.uid).get('user_id')
+    if (ref.exists) {
+      const { user_id }  = ref.data()
+      commit('setField', { field: 'userUid', value: user_id })
+    } else {
+      console.log('Did not find user uid')
+    }
+  },
+  async setShippingInfo({ commit, getters }, payload) {
+    const { user } = getters
+    const ref = await this.$fire.firestore.collection('users').doc(user.uid)
+    try {
+      await ref.set({
+        address: payload.address,
+        name: payload.name,
+        surname: payload.surname,
+        phone: payload.phone,
+      })
+    } catch (e) {
+      console.log(e)
+    }
+  },
+  async getShippingInfo({ commit, getters }) {
+    const { user } = getters
+    const ref = await this.$fire.firestore.collection('users').doc(user.uid)
+    if (ref.exists) {
+      const { name }  = ref.data()
+      commit('setField', { field: 'name', value: name })
+    } else {
+      console.log('Did not find user name')
+    }
+  },
+  async getPaymentMethods({ commit, getters }) {
+    const { userUid } = getters
     // TO-DO слишком жесткая привязка, переделать
-    const response = await this.$axios.$get(`/api/get_cards_by_user_id?user_id=${createdAt}`);
+    const response = await this.$axios.$get(`/api/get_cards_by_user_id?user_id=${userUid}`);
     const mockObject = {
       cvv: '777',
       expirationDate: '2025-03-24T23:24:28.380Z',
@@ -60,6 +110,17 @@ const actions = {
   async addPaymentCard({ commit }, payload) {
     const data = await this.$axios.$post(`/api/buy2${payload}`);
     commit('setField', { field: 'selectedCard', value: data })
+  },
+  buyItems({ commit, dispatch, getters }) {
+    const { basket, userUid } = getters
+    const newArray = basket.map((s) => ({
+      item_id: s.itemId,
+      user_id: userUid
+    }))
+    newArray.forEach(element => {
+      this.$axios.$post(`/api/buy2`, element);
+    })
+    // dispatch('basket/clearBasket', null, { root:true })
   }
 };
 
