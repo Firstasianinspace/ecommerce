@@ -35,7 +35,7 @@ export default {
     OrderSummary,
     ProductCardHorizontal,
   },
-  middleware: 'emptyCart',
+  // middleware: 'emptyCart',
   data: () => ({
     active: 0,
     steps: ['Детали', 'Доставка', 'Оплата', 'Review'],

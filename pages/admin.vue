@@ -70,7 +70,7 @@ export default {
           title: this.addProduct.title,
           description: this.addProduct.description,
         }
-        await this.$axios.$post('/api/add', data);
+        await this.$axios.post('/add', data);
         this.addProduct.title = null;
         this.addProduct.description = null;
       } catch (error) {

@@ -8,6 +8,7 @@ export default function ({
     config.headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
+      'Grpc-Metadata-Authorization': this.$auth.strategy.token.get(),
     }
   })
 

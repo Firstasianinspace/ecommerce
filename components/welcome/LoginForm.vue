@@ -57,7 +57,7 @@ export default {
     ...mapGetters('user', ['error']),
   },
   methods: {
-    ...mapActions('auth', ['signInAction']),
+    ...mapActions('user', ['signInAction']),
 
     handleInput() {
       this.errorFromServer = ''

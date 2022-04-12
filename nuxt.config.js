@@ -43,10 +43,10 @@ export default {
   plugins: [
     '@/plugins/global.js',
     '@/plugins/vuelidate.js',
-    {
-      src: '@/plugins/persistedState.client.js',
-      mode: 'client'
-    },
+    // {
+    //   src: '@/plugins/persistedState.client.js',
+    //   mode: 'client'
+    // },
     '@/plugins/filters.js',
     {
       src: '@/plugins/vue-awesome-swiper',
@@ -69,6 +69,7 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/firebase',
+    '@nuxtjs/auth-next'
     // '@nuxtjs/proxy',
   ],
 
@@ -78,11 +79,32 @@ export default {
       regular: true,
     }
   },
+  router: {
+    middleware: ['auth']
+  },
   axios: {
     baseURL: 'http://193.168.48.193:8081/v1',
     // proxy: true,
     //   proxyHeadersIgnore: ['accept', 'host', 'x-forwarded-host', 'x-forwarded-port', 'x-forwarded-proto', 'cf-ray', 'cf-connecting-ip', 'content-length', 'content-md5', 'content-type'],
     // },
+  },
+  auth: {
+    strategies: {
+      customStrategy: {
+        scheme: '~/schemes/userScheme',
+        endpoints: {
+          login: {
+            url: '/auth',
+            method: 'post'
+          },
+          user: {
+            url: '/user',
+            method: 'get'
+          },
+        }
+      }
+      /* ... */
+    }
   },
   // proxy: {
   //   '/api/': {

@@ -1,64 +1,12 @@
 <template>
-  <div class="welcome-page">
-    <div class="welcome-forms">
-      <div class="welcome-forms__header">
-        <div
-          v-for="(tab, index) in tabs"
-          :key="index"
-          class="welcome-forms__header-link"
-          :class="tab.class"
-          @click="toggleComponent"
-        >
-          <div>
-            {{ tab.label }}
-          </div>
-        </div>
-      </div>
-      <div class="welcome-form">
-        <keep-alive>
-          <component :is="dynamicComponent" />
-        </keep-alive>
-      </div>
-    </div>
+  <div class="home-page">
+    <nuxt-link to="/catalog">To catalog</nuxt-link>
   </div>
 </template>
 
 <script>
-import LoginForm from '@/components/welcome/LoginForm'
-import RegistrationForm from '@/components/welcome/RegistrationForm'
-
 export default {
   name: 'IndexPage',
-  components: {
-    LoginForm,
-    RegistrationForm,
-  },
-  layout: 'login',
-  middleware: 'authenticated',
-  data: () => ({
-    selectedIndex: 0,
-    isLogin: true,
-  }),
-  computed: {
-    dynamicComponent: (vm) => (vm.isLogin ? LoginForm : RegistrationForm),
-    tabs() {
-      return [
-        {
-          label: 'Вход',
-          class: this.isLogin ? 'active' : null,
-        },
-        {
-          label: 'Регистрация',
-          class: this.isLogin ? null : 'active',
-        },
-      ]
-    },
-  },
-  methods: {
-    toggleComponent() {
-      this.isLogin = !this.isLogin
-    },
-  },
 }
 </script>
 <style lang="scss" scoped>
