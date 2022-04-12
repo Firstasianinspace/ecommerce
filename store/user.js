@@ -14,7 +14,9 @@ const getters = {
 const actions = {
   async signInAction({ commit }, payload) {
     try {
-      await this.$auth.loginWith('customStrategy', { data: payload })
+      await this.$auth.loginWith('customStrategy', { data: payload }).then((response) => {
+        console.log(response)
+      })
         // .then((response) => {
         //   let user = response.data.userID
         //   commit('setField', { field: 'userID', value: user })

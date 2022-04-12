@@ -4,6 +4,7 @@ import { LocalScheme } from '~auth/runtime'
 export default class CustomScheme extends LocalScheme {
   // Override `fetchUser` method of `local` scheme
   async fetchUser (endpoint) {
+    console.log(endpoint)
     // Token is required but not available
     // if (!this.check().valid) {
     //   return
@@ -18,11 +19,12 @@ export default class CustomScheme extends LocalScheme {
     // Try to fetch user and then set
     return this.$auth.requestWith(
       this.name,
-      endpoint,
+      test,
       this.options.endpoints.user
     ).then((response) => {
       const user = getProp(response.data, this.options.user.property)
-      
+      console.log(test)
+      console.log(user)
       // Transform the user object
       const customUser = {
         ...user,
