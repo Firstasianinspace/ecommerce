@@ -68,6 +68,7 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/proxy',
     '@nuxtjs/firebase',
     '@nuxtjs/auth-next'
     // '@nuxtjs/proxy',
@@ -83,10 +84,18 @@ export default {
     middleware: ['auth']
   },
   axios: {
-    baseURL: 'http://193.168.48.193:8081/v1',
-    // proxy: true,
+    // baseURL: 'http://193.168.48.193:8081/v1',
+    proxy: true,
     //   proxyHeadersIgnore: ['accept', 'host', 'x-forwarded-host', 'x-forwarded-port', 'x-forwarded-proto', 'cf-ray', 'cf-connecting-ip', 'content-length', 'content-md5', 'content-type'],
     // },
+  },
+  proxy: {
+    '/api/': {
+      target: 'http://193.168.48.193:8081/v1',
+      pathRewrite: {
+        '^/api': '/'
+      },
+    }
   },
   auth: {
     strategies: {
@@ -94,11 +103,11 @@ export default {
         scheme: '~/schemes/userScheme',
         endpoints: {
           login: {
-            url: '/auth',
+            url: '/api/auth',
             method: 'post'
           },
           user: {
-            url: '/user',
+            url: '/api/user',
             method: 'get'
           },
         }
