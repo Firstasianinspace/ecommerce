@@ -20,7 +20,7 @@ const getters = {
 
 const actions = {
   async getProducts({ commit }) {
-    const data = await this.$axios.$get('/items?offset=0&limit=50');
+    const data = await this.$axios.$get('api/items?offset=0&limit=50');
     const newArray = data.items.map((s) => {
       if (s.price) return s
       return ({

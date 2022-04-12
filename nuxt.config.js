@@ -99,17 +99,33 @@ export default {
   },
   auth: {
     strategies: {
+      // local: {
+      //   token: {
+      //     // property: 'token',
+      //     global: true,
+      //     // required: true,
+      //     // type: 'Bearer'
+      //   },
+      //   user: false,
+      //   endpoints: {
+      //     login: { url: '/api/auth', method: 'post' },
+      //     // logout: { url: '/api/auth/logout', method: 'post' },
+      //     // user: { url: '/api/auth/user', method: 'get' }
+      //   }
+      // },
       customStrategy: {
         scheme: '~/schemes/userScheme',
+        token: {
+          maxAge: 900,
+          global: true,
+          type: '',
+        },
         endpoints: {
           login: {
             url: '/api/auth',
             method: 'post'
           },
-          user: {
-            url: '/api/user',
-            method: 'get'
-          },
+          user: false,
         }
       }
       /* ... */
