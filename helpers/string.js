@@ -22,3 +22,9 @@ export const plural = (number, one, two, five) => {
 
 export const pluralProducts = (number) =>
   plural(number, 'товар', 'товара', 'товаров');
+
+export const maskCardNumber = (str) => {
+  if (!str) return
+  const strWithoutSpaces = str.replace(/\s/g, '')
+  return strWithoutSpaces.substring(0,4) + '#'.repeat(Math.max(0, strWithoutSpaces.length - 8)) + strWithoutSpaces.substr(-4)
+}

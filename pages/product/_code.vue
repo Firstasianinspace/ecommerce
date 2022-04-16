@@ -27,10 +27,10 @@ export default {
 
     product: (vm) =>
       vm.products.find(
-        (s) => parseInt(s.itemId) === parseInt(vm.$route.params.code)
+        (s) => parseInt(s.item_id) === parseInt(vm.$route.params.code)
       ),
-    productImage: (vm) => vm.product?.itemImageUrl,
-    galleryActive: (vm) => Array.isArray(vm.product?.itemImageUrl),
+    productImage: (vm) => vm.product?.item_image_url,
+    galleryActive: (vm) => Array.isArray(vm.product?.item_image_url),
     // productImages: (vm) => vm.product?.itemImageUrl ? vm.product?.itemImageUrl : vm.product?.images,
   },
 }

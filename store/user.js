@@ -2,11 +2,14 @@ import { setField } from './helpers';
 // import { handleFirebaseAuthError } from '@/helpers/errors';
 
 const state = () => ({
-  access_token: null,
-  userID: null,
+  // access_token: null,
+  user: {},
+  // userID: null,
 });
 
 const getters = {
+  userID: ({ user }) => user.userID,
+  // userID: () => this.$auth.user,
   // isAuthenticated: ({ state }) => state.auth.loggedIn,
   // loggedInUser: ({ state }) => state.auth.user
 }
@@ -14,26 +17,17 @@ const getters = {
 const actions = {
   async signInAction({ commit }, payload) {
     try {
-      await this.$auth.loginWith('customStrategy', { data: payload }).then((response) => {
-        console.log(response)
-      })
-        // .then((response) => {
-        //   let user = response.data.userID
-        //   commit('setField', { field: 'userID', value: user })
-        //   this.$auth.$storage.setUniversal('user', user, true)
-        //   user = this.$auth.$storage.getUniversal('user')
-        // })
-        // this.$router.push('/catalog')
-      // await this.$axios.post('/auth', payload).then((response) => {
-      // commit('setField', { field: 'id', value: response.data.userID })
-      // commit('setField', { field: 'access_token', value: response })
-      // })
-      // commit('setField', { field: 'id', value: userID })
-      // commit('setField', { field: 'access_token', value: headers })
+      await this.$auth.loginWith('customStrategy', { data: payload })
     } catch (e) {
       console.log(e)
     }
   },
+  async getUser({ commit }) {
+    if (!this.$auth.user) return
+    const userID = this.$auth.$storage.getUniversal('user')
+    const user = await this.$axios.get(`/api/user?userID=${userID}`)
+    commit('setField', { field: 'user', value: user.data })
+  }
 };
 
 const mutations = {

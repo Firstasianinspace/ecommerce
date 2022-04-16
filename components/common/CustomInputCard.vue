@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import { mask } from 'vue-the-mask'
 import CustomInputScope from './CustomInputScope.vue'
 import {
   DEFAULT_CARD_NUMBER_MASK,
@@ -27,7 +26,6 @@ export default {
   components: {
     CustomInputScope,
   },
-  directives: { mask },
   props: {
     maskType: {
       type: String,

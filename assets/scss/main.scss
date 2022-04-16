@@ -13,14 +13,18 @@ li {
   list-style: none;
 }
 
+label {
+  color: $grey;
+}
+
 .relative {
   position: relative;
 }
 
 .container {
-  max-width: 1240px;
+  max-width: 1920px;
   margin: 0 auto;
-  padding: 0 16px;
+  padding: 0 80px;
 }
 
 /*
@@ -30,6 +34,7 @@ li {
   display: flex;
   flex-direction: column;
   padding: 0 0 20px 0;
+  border-radius: 5px;
 
   & label {
     padding: 0 0 10px 0;

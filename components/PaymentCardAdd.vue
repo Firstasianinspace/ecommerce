@@ -107,7 +107,6 @@ export default {
 
     minCardMonth: () => new Date().getMonth(),
     minCardYear: () => new Date().getFullYear(),
-    // isNewCard: (vm) => vm.
     generateCardMask: () => '#### #### #### ####',
     maxMonth: (vm) => dateValidations(vm.cardForm.date),
     // getCardType: (vm) => getCardTypes(vm.cardForm.number),

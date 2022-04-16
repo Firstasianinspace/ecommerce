@@ -3,7 +3,6 @@
     <div class="product-card-horizontal__remove" @click="removeHandler">X</div>
     <custom-image
       :src="productImage"
-      :resize="resize"
       class="product-card-horizontal__image"
       alt="img"
     />
@@ -31,7 +30,7 @@ export default {
   },
   computed: {
     productName: (vm) => vm.product?.title || vm.defaultName,
-    productImage: (vm) => vm.product?.itemImageUrl,
+    productImage: (vm) => vm.product?.item_image_url,
     productDescription: (vm) => vm.product?.description,
     regularPrice: (vm) => vm.product?.price,
     specialPrice: (vm) => vm.product?.discountPrice,

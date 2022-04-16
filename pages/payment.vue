@@ -5,10 +5,10 @@
         <h6 class="shipping-form__title">Платеж в "Название магазина"</h6>
         <PaymentInfo v-bind="bindProps" />
         <div class="payment-cards">
-          <SelectCard :item-value="'Добавить новую'" :items="userCards" />
+          <SelectCard :items="userCards" :choosen-one="selectedCardNumbers" />
         </div>
         <PaymentCardAdd v-if="addNewCard" />
-        <PaymentCard v-else :card="newestUserCard" />
+        <PaymentCard v-else :card="choosenCard" />
 
         <custom-button :label="'Продолжить'" class="payment-page__button" @click="handleClick" />
       </div>
@@ -33,22 +33,24 @@ export default {
   },
   computed: {
     ...mapGetters('basket', ['basketTotal']),
-    ...mapGetters('user', ['user', 'paymentMethods', 'selectedCard']),
+    ...mapGetters('payment', ['paymentMethods', 'selectedCard', 'choosenOne']),
 
     bindProps: (vm) => ({
       total: vm.basketTotal,
       sumTotal: vm.basketTotal,
     }),
 
+    choosenCard: (vm) => vm.choosenOne,
+    selectedCardNumbers: (vm) =>
+      vm.choosenOne?.name === 'Новая карта' ? vm.choosenOne?.name : vm.choosenOne?.number,
     userCards: (vm) => vm.paymentMethods,
-    newestUserCard: (vm) => vm.selectedCard,
-    addNewCard: (vm) => vm.paymentMethods[0]?.number === 'Новая карта',
+    addNewCard: (vm) => vm.selectedCard?.name === 'Новая карта',
   },
   mounted() {
     this.getPaymentMethods()
   },
   methods: {
-    ...mapActions('user', ['getPaymentMethods', 'buyItems']),
+    ...mapActions('payment', ['getPaymentMethods', 'buyItems']),
 
     async handleClick() {
       try {
@@ -65,7 +67,7 @@ export default {
 <style lang="scss" scoped>
 .payment-page {
   &-grid {
-    padding: 50px 240px;
+    padding: 50px 500px;
     margin: 0 auto;
     &__column {
       padding: 50px 120px;

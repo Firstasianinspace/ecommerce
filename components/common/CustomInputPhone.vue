@@ -16,7 +16,6 @@
 </template>
 
 <script>
-import { mask } from 'vue-the-mask';
 import CustomInputScope from './CustomInputScope.vue';
 import { getRawPhoneNumber } from '@/helpers';
 import { DEFAULT_PHONE_MASK } from '@/constants';
@@ -25,7 +24,6 @@ export default {
   components: {
     CustomInputScope,
   },
-  directives: { mask },
   props: {
     mask: {
       type: String,

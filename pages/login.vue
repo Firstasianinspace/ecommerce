@@ -1,24 +1,9 @@
 <template>
-  <div class="welcome-page">
-    <div class="welcome-forms">
-      <div class="welcome-forms__header">
-        <!-- <div
-          v-for="(tab, index) in tabs"
-          :key="index"
-          class="welcome-forms__header-link"
-          :class="tab.class"
-          @click="toggleComponent"
-        >
-          <div>
-            {{ tab.label }}
-          </div>
-        </div>
-      </div> -->
-        <div class="welcome-form">
-          <LoginForm />
-        </div>
-      </div>
+  <div class="welcome">
+    <div class="welcome-form">
+      <LoginForm />
     </div>
+    <a href="#" class="welcome-form__restore"> Забыли пароль? </a>
   </div>
 </template>
 
@@ -32,39 +17,40 @@ export default {
   },
   layout: 'login',
   computed: {
-    authTest: (vm) => vm.$auth
-  }
+    authTest: (vm) => vm.$auth,
+  },
 }
 </script>
 <style lang="scss" scoped>
-.welcome-page {
+.welcome {
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   background: #eee;
 }
 
-.welcome-forms {
+.welcome-form {
   background: #fff;
   width: 650px;
+
   &__header {
     display: flex;
-    justify-content: space-between;
-    padding: 25px;
-    &-link {
-      flex: 1;
-      text-align: center;
-      text-transform: uppercase;
-      font-weight: 700;
-      padding: 10px;
-      color: #767676;
-    }
+    flex-direction: column;
+    text-align: center;
+  }
+
+  &__restore {
+    padding: 35px 0;
+    text-align: center;
+    font-size: 14px;
+    color: #767676;
   }
 }
 
 .welcome-form {
-  padding: 0 30px;
+  padding: 50px;
 }
 
 .active {

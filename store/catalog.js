@@ -1,5 +1,4 @@
 import { setField } from './helpers';
-import { generateRandomInt } from '@/helpers';
 
 const state = () => ({
   products: [],
@@ -21,15 +20,7 @@ const getters = {
 const actions = {
   async getProducts({ commit }) {
     const data = await this.$axios.$get('api/items?offset=0&limit=50');
-    const newArray = data.items.map((s) => {
-      if (s.price) return s
-      return ({
-        ...s,
-        price: generateRandomInt(2500),
-        discountPrice: 0,
-      })
-    })
-    commit('setField', { field: 'products', value: newArray });
+    commit('setField', { field: 'products', value: data.items });
   },
   setSortOption({ commit }, option) {
     commit('setField', { field: 'activeOption', value: option })

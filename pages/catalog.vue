@@ -27,12 +27,9 @@ export default {
     CatalogGrid,
     CatalogSidebar,
   },
-  // middleware: 'guest',
   computed: {
     ...mapGetters('catalog', ['products', 'activeOption']),
-    ...mapGetters('user', ['userUid']),
 
-    testing: (vm) => vm.$auth,
     sortedProducts() {
       if (this.activeOption === 'Сначала дешевле') {
         const lowToHigh = [...this.products]
@@ -53,11 +50,9 @@ export default {
   },
   mounted() {
     this.getProducts()
-    this.getUserUid()
   },
   methods: {
     ...mapActions('catalog', ['getProducts']),
-    ...mapActions('user', ['getUserUid'])
   },
 }
 </script>

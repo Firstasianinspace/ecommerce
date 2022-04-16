@@ -11,7 +11,7 @@
       </div>
       <div class="checkout-page-content__right">
         <OrderSummary
-          :products="products"
+          :basket-products="basket"
           :sub-total="basketTotal"
           :total="basketTotal"
           :shipping-methods="null"
@@ -28,18 +28,11 @@ import OrderSummary from '@/components/OrderSummary'
 import ProductCardHorizontal from '@/components/product/ProductCardHorizontal'
 
 export default {
-  name: 'CheckoutPage',
+  name: 'CartPage',
   components: {
-    // SfSteps,
-    // SfStep,
     OrderSummary,
     ProductCardHorizontal,
   },
-  // middleware: 'emptyCart',
-  data: () => ({
-    active: 0,
-    steps: ['Детали', 'Доставка', 'Оплата', 'Review'],
-  }),
   computed: {
     ...mapGetters('basket', [
       'isCartSidebarOpen',
@@ -52,8 +45,8 @@ export default {
     ...mapActions('basket', ['removeFromBasket']),
 
     removeHandler(product) {
-      const products = [...this.products]
-      this.products = products.filter((element) => element.itemId !== product.itemId)
+      const basket = [...this.basket]
+      this.basket = basket.filter((element) => element.item_id !== product.item_id)
     },
   },
 }

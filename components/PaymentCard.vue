@@ -4,7 +4,7 @@
       {{ cardType }}
     </h6> -->
     <p class="existing-card__numbers">
-      {{ cardNumbers }}
+      {{ cardNumbers | VMask(cardNumberMask) }}
     </p>
     <div class="payment-card__cvv">
       <p>Код безопасности</p>
@@ -33,8 +33,8 @@
 </template>
 
 <script>
-import { required, minLength } from 'vuelidate/lib/validators'
-import { getCardTypes } from '@/helpers'
+import { required } from 'vuelidate/lib/validators'
+import { getCardTypes, maskCardNumber } from '@/helpers'
 import CustomInputCard from '@/components/common/CustomInputCard'
 
 export default {
@@ -57,18 +57,16 @@ export default {
     cardForm: {
       cvv: {
         required,
-        maxLength: minLength(3),
       },
     },
     creditCardValidationGroup: ['cardForm.cvv'],
   },
   computed: {
     getCardType: (vm) => getCardTypes(vm.card.number),
-    cardName: (vm) => vm.card?.name,
-    cardNumbers: (vm) =>
-      '#'.repeat(Math.max(0, vm.card?.number.length - 4)) +
-      vm.card?.number.substr(-4),
+    cardName: (vm) => vm.card.name,
+    cardNumbers: (vm) => maskCardNumber(vm.card?.number),
     dynamicLogo: () => 'https://picsum.photos/64/64',
+    cardNumberMask: () => 'XXXX XXXX XXXX XXXX',
   },
 }
 </script>
@@ -84,7 +82,6 @@ export default {
   border: 1px solid #e0e0e0;
   border-radius: 6px;
   position: relative;
-  z-index: -1;
   // existing-card__numbers
   & h6 {
     font-size: 22px;

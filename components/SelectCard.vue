@@ -10,17 +10,19 @@
       @click="close"
     />
     <div class="b-field__caption" @click="isOpen = !isOpen">
-      {{ selectedCardName }}
+      <span v-if="choosenOne === 'Новая карта'">{{ choosenOne }}</span>
+      <span v-else>{{ choosenOne | VMask(cardNumberMask)}}</span>
     </div>
     <div class="b-field__options">
       <template v-if="items.length">
         <div
-          v-for="(item, i) in itemList"
-          :key="i"
+          v-for="item in items"
+          :key="item.id"
           class="b-field__item"
           @click="onSelect(item)"
         >
-        <span>{{ item.number }}</span>
+        <span v-if="item.name === 'Новая карта'">{{ item.name }}</span>
+        <span v-else>{{ item.number | VMask(cardNumberMask) }}</span>
         </div>
       </template>
       <div v-else class="b-field__item b-field__item--disabled">
@@ -31,7 +33,8 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
+// import { maskCardNumber } from '@/helpers'
 import ClickOutside from '@/components/common/ClickOutside.vue'
 
 export default {
@@ -48,6 +51,10 @@ export default {
       type: String,
       default: 'Список пуст',
     },
+    choosenOne: {
+      type: String,
+      default: 'Choosen one'
+    }
   },
   data() {
     return {
@@ -56,9 +63,6 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('user', ['paymentMethods']),
-
-    selectedCardName: (vm) => vm.paymentMethods[0].number,
     className() {
       const { isOpen, isFocused } = this
       const classNames = ['b-field b-field--select']
@@ -66,13 +70,14 @@ export default {
       ;(isOpen || isFocused) && classNames.push('is-focused')
       return classNames
     },
-    itemList() {
-      const newArray = [...this.items]
-      return newArray
-    }
+    // itemList: (vm) => vm.items.map((s) => ({
+    //   id: s.id,
+    //   name: s.name === 'Новая карта' ? 'Новая карта' : maskCardNumber(s.number),
+    // })),
+    cardNumberMask: () => 'XXXX XXXX XXXX XXXX',
   },
   methods: {
-    ...mapActions('user', ['setPaymentMethod']),
+    ...mapActions('payment', ['setPaymentMethod']),
 
     close() {
       this.isOpen = false

@@ -2,7 +2,7 @@
   <div class="">
     <div class="expandable-title" @click="expanded = !expanded">
       {{ title }}
-      <font-awesome-icon v-if="chevron" :icon="['fas', 'chevron']" />
+      <font-awesome-icon v-if="chevron" :icon="toggleChevron" />
     </div>
     <transition-expand>
       <div v-if="expanded" class="expandable-message">
@@ -35,10 +35,13 @@ export default {
     },
   },
   data: () => ({ expanded: false }),
+  computed: {
+    toggleChevron: (vm) => vm.expanded ? ['fas', 'chevron-up'] : ['fas', 'chevron-down']
+  }
 }
 </script>
 
-<style>
+<style lang="scss">
 .expand-enter-active,
 .expand-leave-active {
   transition-property: opacity, height;
@@ -51,5 +54,9 @@ export default {
   font-size: 16px;
   font-weight: 400;
   padding: 10px 0;
+  
+  & svg {
+    margin: 0 0 0 5px;
+  }
 }
 </style>

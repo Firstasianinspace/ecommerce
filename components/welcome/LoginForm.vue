@@ -1,13 +1,13 @@
 <template>
-  <div
-    class="login-form"
-    autocomplete="it-course-login-form"
-  >
+  <div class="login-form">
+    <label>Имя пользователя</label>
     <custom-input-login
       v-model="$v.email.$model"
       :error-model="$v.email"
+      placeholder="Имя пользователя"
       @input="handleInput"
     />
+    <label>Пароль</label>
     <custom-input-password
       v-model="$v.password.$model"
       :error-model="$v.password"
@@ -21,7 +21,6 @@
       v-text="errorFromServer"
     />
     <custom-button :label="'Вход'" :type="'submit'" class="login-form__btn" @click="loginUser()"/>
-    <a href="#" class="login-form__restore"> Забыли пароль? </a>
   </div>
 </template>
 
@@ -86,8 +85,12 @@ export default {
   display: flex;
   flex-direction: column;
   margin: 0 80px;
+  & label {
+    padding: 0 0 7.5px 0;
+  }
   &__btn {
     padding: 12px 0;
+    margin: 15px 0 0 0;
     background: #222;
     color: #fff;
     border: none;
@@ -120,18 +123,10 @@ export default {
 .form-field {
   display: flex;
   flex-direction: column;
-  padding: 0 0 20px 0;
-  & label {
-    padding: 0 0 10px 0;
-    text-transform: uppercase;
-    font-weight: 700;
-    color: #767676;
-  }
-
+  padding: 0 0 10px 0;
   & input {
     padding: 12px 10px;
   }
-
   &.hasError {
     & input {
       border: 1px solid red;

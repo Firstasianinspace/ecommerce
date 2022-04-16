@@ -60,7 +60,7 @@ export default {
   },
   computed: {
     productName: (vm) => vm.product?.title || vm.defaultName,
-    productImage: (vm) => vm.product?.images ? vm.product?.images[0].url : NOIMAGE_URL,
+    productImage: (vm) => vm.product?.item_image_url || NOIMAGE_URL,
     productDescription: (vm) => vm.product?.description,
     regularPrice: (vm) => vm.product?.price,
     specialPrice: (vm) => vm.product?.discountPrice,

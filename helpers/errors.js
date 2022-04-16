@@ -14,6 +14,7 @@ export const getErrorMap = (context = {}) => ({
   phoneLength: 'Телефон некорректный',
   isCurrentPassword: 'Введен неверный пароль',
   passwordIsSame: 'Пароли не совпадают',
+  cvvIsSame: 'CVV/CVC не совпадают',
   passwordValidation:
     'Пароль должен содержать более 8 символов, латинские буквы в верхнем и нижнем регистре, а также цифры',
   email:

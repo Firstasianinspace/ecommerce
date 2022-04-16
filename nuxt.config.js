@@ -32,46 +32,33 @@ export default {
       href: '/favicon.ico'
     }],
   },
-
-  // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
+    '@/assets/scss/_variables.scss',
     '@/assets/scss/main.scss',
     'swiper/swiper.scss',
   ],
-
-  // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     '@/plugins/global.js',
     '@/plugins/vuelidate.js',
-    // {
-    //   src: '@/plugins/persistedState.client.js',
-    //   mode: 'client'
-    // },
     '@/plugins/filters.js',
+    '@/plugins/v-mask.js',
     {
       src: '@/plugins/vue-awesome-swiper',
       mode: 'client'
     },
   ],
-
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
-
-  // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
-    // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
-    '@nuxtjs/fontawesome'
+    '@nuxtjs/fontawesome',
+    '@nuxtjs/dotenv'
   ],
-
-  // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/proxy',
-    '@nuxtjs/firebase',
-    '@nuxtjs/auth-next'
-    // '@nuxtjs/proxy',
+    '@nuxtjs/auth-next',
+    '@nuxtjs/cloudinary'
   ],
 
   fontawesome: {
@@ -84,10 +71,7 @@ export default {
     middleware: ['auth']
   },
   axios: {
-    // baseURL: 'http://193.168.48.193:8081/v1',
     proxy: true,
-    //   proxyHeadersIgnore: ['accept', 'host', 'x-forwarded-host', 'x-forwarded-port', 'x-forwarded-proto', 'cf-ray', 'cf-connecting-ip', 'content-length', 'content-md5', 'content-type'],
-    // },
   },
   proxy: {
     '/api/': {
@@ -99,20 +83,6 @@ export default {
   },
   auth: {
     strategies: {
-      // local: {
-      //   token: {
-      //     // property: 'token',
-      //     global: true,
-      //     // required: true,
-      //     // type: 'Bearer'
-      //   },
-      //   user: false,
-      //   endpoints: {
-      //     login: { url: '/api/auth', method: 'post' },
-      //     // logout: { url: '/api/auth/logout', method: 'post' },
-      //     // user: { url: '/api/auth/user', method: 'get' }
-      //   }
-      // },
       customStrategy: {
         scheme: '~/schemes/userScheme',
         token: {
@@ -128,33 +98,13 @@ export default {
           user: false,
         }
       }
-      /* ... */
     }
   },
-  // proxy: {
-  //   '/api/': {
-  //     target: 'http://193.168.48.193:8081/v1',
-  //     pathRewrite: {
-  //       '^/api': '/'
-  //     },
-  //   }
-  // },
-  firebase: {
-    config: {
-      apiKey: 'AIzaSyDgvdQ8otbAiXAfzUzWTOAZD3FrfeAzejA',
-      authDomain: 'itcoursetest-aa7ea.firebaseapp.com',
-      projectId: 'itcoursetest-aa7ea',
-      storageBucket: 'itcoursetest-aa7ea.appspot.com',
-      messagingSenderId: '787333155264',
-      appId: '1:787333155264:web:23c026c4f601484a402025',
-      measurementId: 'G-1C30EJFRKJ'
-    },
-    services: {
-      auth: true,
-      firestore: true,
-    }
+  cloudinary: {
+    cloudName: 'firstasianinspace',
+    apiKey: process.env.CLOUDINARY_KEY,
+    apiSecret: process.env.CLOUDINARY_SECRET,
   },
-  // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
   generate: {
     fallback: true,

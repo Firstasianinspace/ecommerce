@@ -28,7 +28,7 @@ export default {
     ...mapActions('basket', ['addToBasket']),
 
     handleClick(product) {
-      this.$router.push(`product/${product.itemId}`)
+      this.$router.push(`product/${product.item_id}`)
     },
   },
 }
