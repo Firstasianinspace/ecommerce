@@ -126,7 +126,7 @@ export default {
       this.$v.creditCardValidationGroup.$touch()
       return !this.$v.creditCardValidationGroup.$error
     },
-    handleClick() {
+    async handleClick() {
       // console.log(convertDate(this.cardForm.date))
       const cardObject = {
         number: this.cardForm.number,
