@@ -111,7 +111,7 @@ export default {
     ],
   },
   computed: {
-    ...mapGetters('payment', ['userID']),
+    ...mapGetters('payment', ['userID', 'paymentMethods']),
 
     minCardMonth: () => new Date().getMonth(),
     minCardYear: () => new Date().getFullYear(),
@@ -120,7 +120,7 @@ export default {
     // getCardType: (vm) => getCardTypes(vm.cardForm.number),
   },
   methods: {
-    ...mapActions('payment', ['addPaymentCard']),
+    ...mapActions('payment', ['addPaymentCard', 'getPaymentMethods', 'defaultPaymentCard']),
 
     isValid() {
       this.$v.creditCardValidationGroup.$touch()
@@ -136,6 +136,13 @@ export default {
         user_id: this.userID,
       }
       await this.addPaymentCard(cardObject)
+      await this.getPaymentMethods()
+      await this.defaultPaymentCard({
+        card_id: this.paymentMethods.at(-2).id,
+        user_id: this.userID
+      })
+      await this.buyItems()
+      this.$router.push('/success')
     }
   },
 }
