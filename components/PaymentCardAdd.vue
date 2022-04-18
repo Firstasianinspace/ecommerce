@@ -48,11 +48,12 @@
         <div class="payment-card__decor-back" />
       </div>
     </div>
+    <custom-button v-if="!addNewCard" :label="'Продолжить'" class="payment-page__button" @click="handleClick" />
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import { required, minLength, maxLength } from 'vuelidate/lib/validators'
 // import { getCardTypes } from '@/helpers'
 import CustomInputCard from '@/components/common/CustomInputCard'
@@ -103,7 +104,7 @@ export default {
     ],
   },
   computed: {
-    ...mapGetters('user', ['user']),
+    ...mapGetters('payment', ['userID']),
 
     minCardMonth: () => new Date().getMonth(),
     minCardYear: () => new Date().getFullYear(),
@@ -112,10 +113,22 @@ export default {
     // getCardType: (vm) => getCardTypes(vm.cardForm.number),
   },
   methods: {
+    ...mapActions('payment', ['addPaymentCard']),
+
     isValid() {
       this.$v.creditCardValidationGroup.$touch()
       return !this.$v.creditCardValidationGroup.$error
     },
+    async handleClick() {
+      const cardObject = {
+        number: this.cardForm.number,
+        cvv: this.cardForm.cvv,
+        expiration_date: this.cardForm.date,
+        name: this.cardForm.name,
+        user_id: this.userID,
+      }
+      await this.addPaymentCard(cardObject)
+    }
   },
 }
 </script>
@@ -168,6 +181,9 @@ export default {
       }
     }
   }
+}
+.payment-page__button {
+  margin: 90px 0 0 0;
 }
 
 // Payment Card fields

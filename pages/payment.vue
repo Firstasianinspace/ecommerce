@@ -9,8 +9,7 @@
         </div>
         <PaymentCardAdd v-if="addNewCard" />
         <PaymentCard v-else :card="choosenCard" />
-
-        <custom-button :label="'Продолжить'" class="payment-page__button" @click="handleClick" />
+        <custom-button v-if="!addNewCard" :label="'Продолжить'" class="payment-page__button" @click="handleClick" />
       </div>
     </div>
   </div>
@@ -43,16 +42,21 @@ export default {
     choosenCard: (vm) => vm.choosenOne,
     selectedCardNumbers: (vm) =>
       vm.choosenOne?.name === 'Новая карта' ? vm.choosenOne?.name : vm.choosenOne?.number,
-    userCards: (vm) => vm.paymentMethods,
+    userCards: (vm) => vm.paymentMethods.filter((s) => s.name),
     addNewCard: (vm) => vm.selectedCard?.name === 'Новая карта',
   },
   mounted() {
     this.getPaymentMethods()
   },
   methods: {
-    ...mapActions('payment', ['getPaymentMethods', 'buyItems']),
+    ...mapActions('payment', ['getPaymentMethods', 'buyItems', 'addPaymentCard']),
 
     async handleClick() {
+      // if (this.addNewCard) {
+      //   const cardObject = {
+          
+      //   }
+      // }
       try {
         await this.buyItems()
         this.$router.push('/success')
@@ -67,15 +71,16 @@ export default {
 <style lang="scss" scoped>
 .payment-page {
   &-grid {
-    padding: 50px 500px;
+    padding: 50px 0;
+    max-width: 690px;
     margin: 0 auto;
     &__column {
-      padding: 50px 120px;
+      padding: 50px 100px;
       border: 1px solid black;
     }
   }
   &__button {
-    margin: 30px 0 0 0;
+    margin: 80px 0 0 0;
     z-index: 1000;
   }
 }

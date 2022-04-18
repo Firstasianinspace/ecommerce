@@ -53,6 +53,14 @@ const actions = {
   async addPaymentCard({ commit }, payload) {
     await this.$axios.$post(`/api/buy2${payload}`);
   },
+  async setDefaultPaymentCard({ commit, getters }) {
+    const { selectedCard, userID } = getters
+    const cardObject = {
+      card_id: selectedCard.id,
+      user_id: userID
+    }
+    await this.$axios.$post(`/api/set_default_card`, cardObject)
+  },
   async buyItems({ commit, getters }, payload) {
     const { itemsIDs, userID } = getters
 
