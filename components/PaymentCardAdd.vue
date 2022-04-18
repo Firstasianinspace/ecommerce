@@ -127,15 +127,15 @@ export default {
       return !this.$v.creditCardValidationGroup.$error
     },
     handleClick() {
-      console.log(convertDate(this.cardForm.date))
-      // const cardObject = {
-      //   number: this.cardForm.number,
-      //   cvv: this.cardForm.cvv,
-      //   expiration_date: convertDate(this.cardForm.date),
-      //   name: this.cardForm.name,
-      //   user_id: this.userID,
-      // }
-      // await this.addPaymentCard(cardObject)
+      // console.log(convertDate(this.cardForm.date))
+      const cardObject = {
+        number: this.cardForm.number,
+        cvv: this.cardForm.cvv,
+        expiration_date: convertDate(this.cardForm.date),
+        name: this.cardForm.name,
+        user_id: this.userID,
+      }
+      await this.addPaymentCard(cardObject)
     }
   },
 }

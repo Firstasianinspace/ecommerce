@@ -34,5 +34,5 @@ export const convertDate = (string) => {
   const year = string.substring(string.length - 2)
   const dateString = `${'20' + year }` + '-' + `${month + '-31'}`
   const date = new Date(dateString)
-  return date
+  return date.toISOString()
 }
