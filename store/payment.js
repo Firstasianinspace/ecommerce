@@ -27,6 +27,9 @@ const getters = {
   userID(state, getters, rootState, rootGetters) {
     return rootGetters[`user/userID`]
   },
+  itemsIDs(state, getters, rootState, rootGetters) {
+    return rootGetters[`basket/itemsIDs`]
+  },
   choosenOne(state, getters, rootState, rootGetters) {
     const { selectedCard, defaultCard, paymentMethods } = getters
     if (selectedCard) return selectedCard
@@ -50,6 +53,19 @@ const actions = {
   async addPaymentCard({ commit }, payload) {
     await this.$axios.$post(`/api/buy2${payload}`);
   },
+  async buyItems({ commit, getters }, payload) {
+    const { itemsIDs, userID } = getters
+
+    const buyObject = {
+      item_id: itemsIDs,
+      user_id: userID,
+    }
+    await this.$axios.$post(`/api/buy2`, buyObject)
+    // newArray.forEach(element => {
+    //   this.$axios.$post(`/api/buy2`, element);
+    // })
+    // dispatch('basket/clearBasket', null, { root:true })
+  }
 };
 
 const mutations = {

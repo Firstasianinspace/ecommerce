@@ -16,6 +16,12 @@ const getters = {
       return 0;
     }
     return basket.map(x => parseInt(x.discount_price) ? parseInt(x.discount_price) : parseInt(x.price)).reduce((a, b) => a + b)
+  },
+  itemsIDs: ({ basket }) => {
+    if (basket.length === 0) {
+      return null
+    }
+    return basket.map((s) => s.item_id)
   }
 };
 
