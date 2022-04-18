@@ -17,6 +17,12 @@
           :label="'Действует до'"
           class="payment-card__date"
         />
+        <CustomInput
+          v-model="$v.cardForm.name.$model"
+          :label="'Имя'"
+          :placeholder="'Ваше имя'"
+          :v="$v.cardForm.name"
+        />
         <!-- <div class="card-logo">
           <custom-image
             v-if="getCardType"
@@ -48,7 +54,7 @@
         <div class="payment-card__decor-back" />
       </div>
     </div>
-    <custom-button v-if="!addNewCard" :label="'Продолжить'" class="payment-page__button" @click="handleClick" />
+    <custom-button :label="'Продолжить'" class="payment-page__button" @click="handleClick" />
   </div>
 </template>
 

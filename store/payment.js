@@ -51,7 +51,7 @@ const actions = {
     await commit('setField', { field: 'selectedCard', value: payload })
   },
   async addPaymentCard({ commit }, payload) {
-    await this.$axios.$post(`/api/buy2${payload}`);
+    await this.$axios.$post(`/api/buy2`, payload);
   },
   async setDefaultPaymentCard({ commit, getters }) {
     const { selectedCard, userID } = getters
