@@ -28,3 +28,11 @@ export const maskCardNumber = (str) => {
   const strWithoutSpaces = str.replace(/\s/g, '')
   return strWithoutSpaces.substring(0,4) + '#'.repeat(Math.max(0, strWithoutSpaces.length - 8)) + strWithoutSpaces.substr(-4)
 }
+
+export const convertDate = (string) => {
+  const month = string.substring(0, 2);
+  const year = string.substring(string.length - 2)
+  const dateString = `${'20' + year }` + '-' + `${month + '-31'}`
+  const date = new Date(dateString)
+  return date
+}

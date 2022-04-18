@@ -61,6 +61,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import { required, minLength, maxLength } from 'vuelidate/lib/validators'
+import { convertDate } from '@/helpers'
 // import { getCardTypes } from '@/helpers'
 import CustomInputCard from '@/components/common/CustomInputCard'
 
@@ -125,15 +126,16 @@ export default {
       this.$v.creditCardValidationGroup.$touch()
       return !this.$v.creditCardValidationGroup.$error
     },
-    async handleClick() {
-      const cardObject = {
-        number: this.cardForm.number,
-        cvv: this.cardForm.cvv,
-        expiration_date: this.cardForm.date,
-        name: this.cardForm.name,
-        user_id: this.userID,
-      }
-      await this.addPaymentCard(cardObject)
+    handleClick() {
+      console.log(convertDate(this.cardForm.date))
+      // const cardObject = {
+      //   number: this.cardForm.number,
+      //   cvv: this.cardForm.cvv,
+      //   expiration_date: convertDate(this.cardForm.date),
+      //   name: this.cardForm.name,
+      //   user_id: this.userID,
+      // }
+      // await this.addPaymentCard(cardObject)
     }
   },
 }
