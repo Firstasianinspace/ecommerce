@@ -1,6 +1,5 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
-  target: 'static',
   server: {
     host: '192.168.0.105' // default: localhost
   },
@@ -82,6 +81,12 @@ export default {
     }
   },
   auth: {
+    redirect: {
+      login: '/login',
+      logout: '/',
+      callback: '/login',
+      home: '/catalog'
+    },
     strategies: {
       customStrategy: {
         scheme: '~/schemes/userScheme',

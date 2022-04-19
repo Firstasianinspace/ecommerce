@@ -16,9 +16,6 @@ export default {
     LoginForm,
   },
   layout: 'login',
-  computed: {
-    authTest: (vm) => vm.$auth,
-  },
 }
 </script>
 <style lang="scss" scoped>
