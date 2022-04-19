@@ -72,7 +72,6 @@ export default {
           username: this.email,
           password: this.password,
         })
-        this.$router.push('/catalog')
       } catch (error) {
         this.errorFromServer = handleFirebaseAuthError(error.code)
       }

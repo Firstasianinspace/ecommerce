@@ -120,7 +120,7 @@ export default {
     // getCardType: (vm) => getCardTypes(vm.cardForm.number),
   },
   methods: {
-    ...mapActions('payment', ['addPaymentCard', 'getPaymentMethods', 'defaultPaymentCard']),
+    ...mapActions('payment', ['addPaymentCard', 'getPaymentMethods', 'defaultPaymentCard', 'buyItems']),
 
     isValid() {
       this.$v.creditCardValidationGroup.$touch()

@@ -71,7 +71,7 @@ const actions = {
       item_id: itemsIDs,
       user_id: userID,
     }
-    await this.$axios.$post(`/api/buy2`, buyObject)
+    await this.$axios.$post(`/api/buy1`, buyObject)
     // newArray.forEach(element => {
     //   this.$axios.$post(`/api/buy2`, element);
     // })
