@@ -1,8 +1,8 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
-  server: {
-    host: '192.168.0.105' // default: localhost
-  },
+  // server: {
+  //   host: '192.168.0.105' // default: localhost
+  // },
   head: {
     title: 'ecommerce',
     htmlAttrs: {
