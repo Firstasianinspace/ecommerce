@@ -1,6 +1,6 @@
 <template>
   <div class="header-services">
-    <HeaderFavorites />
+    <HeaderSearch />
     <HeaderUser />
     <HeaderCart />
   </div>
@@ -8,14 +8,14 @@
 
 <script>
 import HeaderUser from '@/components/header/headerServices/user/HeaderUser'
-import HeaderFavorites from '@/components/header/headerServices/favorites/HeaderFavorites'
+import HeaderSearch from '@/components/header/headerServices/favorites/HeaderSearch'
 import HeaderCart from '@/components/header/headerServices/cart/HeaderCart'
 
 export default {
   name: 'HeaderServices',
   compnents: {
     HeaderUser,
-    HeaderFavorites,
+    HeaderSearch,
     HeaderCart,
   },
 }

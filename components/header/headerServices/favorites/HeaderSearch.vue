@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link to="/" class="header-services__item">
+  <div class="header-services__item">
     <span>Search</span>
     <svg
       x="0px"
@@ -71,12 +71,27 @@
 	C8.834,9.048,8.826,9.218,8.934,9.326z"
       />
     </svg>
-  </nuxt-link>
+		<custom-input />
+  </div>
 </template>
 
 <script>
-export default {}
+export default {
+	name: 'HeaderSearch',
+	data: () => ({
+		isOpen: false,
+	})
+}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+.header-services__item {
+	& .form-field {
+		padding: 0;
+
+		& input {
+			padding: 0;
+		}
+	}
+}
 </style>

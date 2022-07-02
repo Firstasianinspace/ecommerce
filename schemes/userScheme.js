@@ -10,6 +10,7 @@ export default class CustomScheme extends LocalScheme {
       this.options.endpoints.login
     ).then((response) => {
       const token = response.headers['grpc-metadata-authorization']
+      console.log(token)
       this.$auth.strategy.token.set(token)
       let user = response.data.userID
       this.$auth.setUser(user)
