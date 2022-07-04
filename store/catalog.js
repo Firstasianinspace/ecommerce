@@ -22,6 +22,10 @@ const actions = {
     const data = await this.$axios.$get('api/items?offset=0&limit=50');
     commit('setField', { field: 'products', value: data.items });
   },
+  async getProduct({ commit }, payload) {
+    const data = await this.$axios.$get(`api/items?item_id=${payload}&offset=0&limit=50`)
+    commit('setField', { field: 'products', value: data.items });
+  },
   setSortOption({ commit }, option) {
     commit('setField', { field: 'activeOption', value: option })
   },

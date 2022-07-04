@@ -1,6 +1,7 @@
 <template>
   <div class="header-services__item">
-    <span>Search</span>
+    <span v-if="!isOpen">Search</span>
+		<custom-input v-else />
     <svg
       x="0px"
       y="0px"
@@ -71,7 +72,6 @@
 	C8.834,9.048,8.826,9.218,8.934,9.326z"
       />
     </svg>
-		<custom-input />
   </div>
 </template>
 
